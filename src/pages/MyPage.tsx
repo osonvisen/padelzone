@@ -1,5 +1,10 @@
 const MyPage = () => {
-    return <div>MyPage</div>;
+    return (
+        <>
+            <div className="welcome">Velkommen!</div>
+            <input type="text" />
+        </>
+    );
 };
 
 export default MyPage;

@@ -4,17 +4,15 @@ interface User {
     id?: string;
     name: string;
     email: string;
-    role: "admin" | "user";
+    role: "user" | "admin";
 }
 
 interface UserState {
     users: User[];
 }
 
-//
-
 const initialState: UserState = {
-    users: JSON.parse(localStorage.getItem("users") || "[]"),
+    users: JSON.parse(localStorage.getItem("users") || "[]"), // Henter brukere fra localStorage
 };
 
 const userSlice = createSlice({
@@ -23,11 +21,11 @@ const userSlice = createSlice({
     reducers: {
         setUsers: (state, action: PayloadAction<User[]>) => {
             state.users = action.payload;
-            localStorage.setItem("users", JSON.stringify(state.users));
+            localStorage.setItem("users", JSON.stringify(state.users)); // Lagre i localStorage
         },
         addUser: (state, action: PayloadAction<User>) => {
             state.users.push(action.payload);
-            localStorage.setItem("users", JSON.stringify(state.users));
+            localStorage.setItem("users", JSON.stringify(state.users)); // Oppdater localStorage
         },
     },
 });
