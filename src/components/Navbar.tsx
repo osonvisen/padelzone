@@ -1,37 +1,57 @@
 import { Link } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../redux/store";
+import { RootState } from "../redux/store";
 import logo from "../assets/padelzone-logo.png";
 import "./styling/Navbar.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentUser } from "../redux/userSlice";
 
 const Navbar: React.FC = () => {
-    // const user = useSelector((state: RootState) => state.user);
+    const currentUser = useSelector(
+        (state: RootState) => state.users.currentUser
+    );
+    const dispatch = useDispatch();
+
+    const handleLogout = () => {
+        dispatch(setCurrentUser(null));
+        localStorage.removeItem("currentUser");
+    };
 
     return (
         <nav className="navbar">
             <Link to="/">
                 <img src={logo} alt="PadelZone Logo" className="logo" />
             </Link>
+            {currentUser ? (
+                <h3>Velkommen {currentUser.name}!</h3>
+            ) : (
+                <h3>Logg inn, eller registrer deg!</h3>
+            )}
             <ul>
                 <li>
                     <Link to="/">Hjem</Link>
                 </li>
-                <li>
-                    <Link to="/mypage">Min Side</Link>
-                </li>
-                <li>
-                    <Link to="/admin">Admin</Link>
-                </li>
-            </ul>
-            {/* <div className="auth">
-                {user.name ? (
-                    <p>Velkommen, {user.name}!</p>
+                {currentUser ? (
+                    <>
+                        <li>
+                            <Link to="/mypage">Min Side</Link>
+                        </li>
+                        <li>
+                            <Link to="/" onClick={handleLogout}>
+                                Logg ut
+                            </Link>
+                        </li>
+                    </>
                 ) : (
-                    <Link to="/login" className="login-btn">
-                        Logg inn
-                    </Link>
+                    <>
+                        <li>
+                            <Link to="/login">Logg inn</Link>
+                        </li>
+                        <li>
+                            <Link to="/register">Registrer deg</Link>
+                        </li>
+                    </>
                 )}
-            </div> */}
+            </ul>
         </nav>
     );
 };

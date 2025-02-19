@@ -1,4 +1,5 @@
 import CreateBooking from "../components/CreateBooking";
+import Login from "../components/Login";
 import RegisterUser from "../components/RegisterUser";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
@@ -18,41 +19,7 @@ const Home: React.FC = () => {
     return (
         <div>
             <h1>Velkommen til PadelZone</h1>
-
-            {/* Viser alle brukere fra db */}
-            <h2>Registrerte brukere:</h2>
-            {users.length > 0 ? (
-                <ul>
-                    {users.map((user) => (
-                        <li key={user._id}>
-                            {user.name} ({user.email}) - {user.role}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>Ingen registrerte brukere.</p>
-            )}
-
-            {/* Viser alle registrerte bookinger i db */}
-            <h2>Bookinger:</h2>
-            {bookings.length > 0 ? (
-                <ul>
-                    {bookings.map((booking) => (
-                        <li key={booking._id}>
-                            Bane {booking.courtId}, {booking.date}, kl{" "}
-                            {booking.timeslot.join(", ")}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>Ingen bookinger funnet.</p>
-            )}
-            <RegisterUser />
-            <p>Test bookingen</p>
             <CreateBooking />
-            <p>
-                Kundenr: {currentUser._id} - Navn: {currentUser.name}
-            </p>
         </div>
     );
 };

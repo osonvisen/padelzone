@@ -16,9 +16,9 @@ const CreateBooking: React.FC = () => {
 
     const availableCourts = players === 2 ? [7, 8] : [1, 2, 3, 4, 5, 6]; // Filtrerer tilgjengelige baner basert på antall spillere
 
-    if (!currentUser) {
-        return <p>Vennligst logg inn for å registrere en booking.</p>;
-    }
+    // if (!currentUser) {
+    //     return <p>Vennligst logg inn for å registrere en booking.</p>;
+    // }
 
     const handleBooking = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -93,12 +93,19 @@ const CreateBooking: React.FC = () => {
                 ))}
             </select>
 
-            <button
-                onClick={handleBooking}
-                disabled={!date || !courtId || !timeslot || !players}
-            >
-                Book bane
-            </button>
+            {currentUser ? (
+                <button
+                    onClick={handleBooking}
+                    disabled={!date || !courtId || !timeslot || !players}
+                >
+                    Book bane
+                </button>
+            ) : (
+                <>
+                    <button>Sjekk tilgjengelighet for valgt tidspunkt</button>
+                    <p>Logg inn for å booke bane!</p>
+                </>
+            )}
         </div>
     );
 };
