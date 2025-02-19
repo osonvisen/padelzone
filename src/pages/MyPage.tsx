@@ -1,8 +1,7 @@
 const MyPage = () => {
     return (
         <>
-            <div className="welcome">Velkommen!</div>
-            <input type="text" />
+            <div className="welcome">Velkommen - Min side!</div>
         </>
     );
 };
