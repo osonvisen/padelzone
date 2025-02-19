@@ -1,10 +1,9 @@
-const apiUrl = "https://crudcrud.com/api/";
-const apiKey = "c702c667d12f4483bcedfb270f6bda4d";
+import { API_BASE_URL } from "./apiConfig";
 
 export const apiPOST = async (resource: string, data: object) => {
     try {
         console.log("Mottatt: ", resource, data);
-        const response = await fetch(apiUrl + apiKey + resource, {
+        const response = await fetch(API_BASE_URL + resource, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),

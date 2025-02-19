@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface Booking {
-    id?: string;
+    _id?: string; // Tildeles av crudcrud
     userId: string;
     courtId: number;
     date: string;
@@ -13,7 +13,7 @@ interface BookingState {
 }
 
 const initialState: BookingState = {
-    bookings: JSON.parse(localStorage.getItem("bookings") || "[]"), // Henter bookinger fra localStorage
+    bookings: JSON.parse(localStorage.getItem("bookings") || "[]"), // Henter bookinger fra localStorage hvis de eksisterer.
 };
 
 const bookingSlice = createSlice({
