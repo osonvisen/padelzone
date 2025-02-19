@@ -3,6 +3,7 @@
     align-items: center;
     justify-content: space-between;
     background-color: #004aad; /* Blå bakgrunn */
+    max-width: 1200px;
 }
 
 .logo {
