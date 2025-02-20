@@ -13,24 +13,6 @@ const Home: React.FC = () => {
     const [isLoginOpen, setIsLoginOpen] = useState(false);
     const navigate = useNavigate();
 
-    // Vi må holde orden på bookingene at vi ikke dobbelbooker!
-    const [bookingData, setBookingData] = useState({
-        courtId: "",
-        players: "2",
-        date: "",
-        timeslot: "",
-    });
-    // Holder rede på endriner i pre-bookingen
-    const handleBookingChange = (name: string, value: string) => {
-        setBookingData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-    };
-    // Sorterer bort opptatte tidspunkt og baner
-    // Ledige baner:
-    const availableCourts = () => {};
-
     useEffect(() => {
         if (currentUser) {
             console.log("ja vi har en innlogget bruker!");
