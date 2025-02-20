@@ -5,7 +5,7 @@ interface Booking {
     userId: string;
     courtId: number;
     date: string;
-    timeslot: number[];
+    timeslot: string;
 }
 
 interface BookingState {
