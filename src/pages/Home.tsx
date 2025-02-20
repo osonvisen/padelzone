@@ -1,25 +1,38 @@
+import { useState } from "react";
 import CreateBooking from "../components/CreateBooking";
 import Login from "../components/Login";
-import RegisterUser from "../components/RegisterUser";
+import Modal from "../components/Modal";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
-// import { setCurrentUser } from "../redux/userSlice";
 
 const Home: React.FC = () => {
-    const users = useSelector((state: RootState) => state.users.users) || [];
-    const bookings =
-        useSelector((state: RootState) => state.bookings.bookings) || [];
-    const currentUser =
-        useSelector((state: RootState) => state.users.currentUser) || [];
-
-    console.log("Users:", users);
-    console.log("Bookings:", bookings);
-    console.log("currentUser:", currentUser);
+    const currentUser = useSelector(
+        (state: RootState) => state.users.currentUser
+    );
+    const [isLoginOpen, setIsLoginOpen] = useState(false);
 
     return (
         <div>
             <h1>Velkommen til PadelZone</h1>
             <CreateBooking />
+            {currentUser ? (
+                <>
+                    <h1>Nothing to see here!</h1>
+                    {currentUser.name}
+                </>
+            ) : (
+                <>
+                    <button onClick={() => setIsLoginOpen(true)}>
+                        Logg inn
+                    </button>
+                    <Modal
+                        isOpen={isLoginOpen}
+                        onClose={() => setIsLoginOpen(false)}
+                    >
+                        <Login onClose={() => setIsLoginOpen(false)} />
+                    </Modal>
+                </>
+            )}
         </div>
     );
 };

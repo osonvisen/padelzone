@@ -14,7 +14,7 @@ interface UserState {
 
 const initialState: UserState = {
     users: JSON.parse(localStorage.getItem("users") || "[]"), // Henter brukere fra localStorage
-    currentUser: JSON.parse(localStorage.getItem("currentUser") || "[]"),
+    currentUser: JSON.parse(localStorage.getItem("currentUser") || "null"),
 };
 
 const userSlice = createSlice({
@@ -33,8 +33,13 @@ const userSlice = createSlice({
             state.currentUser = action.payload;
             localStorage.setItem("currentUser", JSON.stringify(action.payload));
         },
+        delCurrentUser: (state, action: PayloadAction<User | null>) => {
+            state.currentUser = action.payload;
+            localStorage.removeItem("currentUser");
+        },
     },
 });
 
-export const { setUsers, addUser, setCurrentUser } = userSlice.actions;
+export const { setUsers, addUser, setCurrentUser, delCurrentUser } =
+    userSlice.actions;
 export default userSlice.reducer;

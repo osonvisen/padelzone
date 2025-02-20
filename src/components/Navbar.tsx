@@ -3,7 +3,7 @@ import { RootState } from "../redux/store";
 import logo from "../assets/padelzone-logo.png";
 import "./styling/Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { setCurrentUser } from "../redux/userSlice";
+import { delCurrentUser } from "../redux/userSlice";
 
 const Navbar: React.FC = () => {
     const currentUser = useSelector(
@@ -12,8 +12,7 @@ const Navbar: React.FC = () => {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-        dispatch(setCurrentUser(null));
-        localStorage.removeItem("currentUser");
+        dispatch(delCurrentUser(null));
     };
 
     return (

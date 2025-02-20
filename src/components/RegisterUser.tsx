@@ -1,21 +1,22 @@
-import { useState } from "react";
-// import { useDispatch } from "react-redux";
-// import { addUser } from "../redux/userSlice";
-// import { createUser } from "../services/apiService";
-// import { useNavigate } from "react-router-dom";
-// import { apiPOST } from "../api/apiPOST";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser } from "../redux/userSlice";
+import { useNavigate } from "react-router-dom";
+import { apiPOST } from "../api/apiPOST";
 import InputForm from "./InputForm";
+import { RootState } from "../redux/store";
 
 const RegisterUser: React.FC = () => {
-    // const [name, setName] = useState("");
-    // const [email, setEmail] = useState("");
     const [formData, setFormData] = useState({
         userName: "",
         email: "",
     });
+    const currentUser = useSelector(
+        (state: RootState) => state.users.currentUser
+    );
 
-    // const dispatch = useDispatch();
-    // const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     // Til inputfeltene
     const fields = [
@@ -36,15 +37,26 @@ const RegisterUser: React.FC = () => {
     const handleRegister = async () => {
         console.log(formData.userName, formData.email);
 
-        // try {
-        //     const createdUser = await apiPOST("/users", newUser);
-        //     dispatch(addUser(createdUser)); // Oppdaterer redux users[]
-        //     localStorage.setItem("currentUser", JSON.stringify(createdUser)); // lagrer i localStorage
-        //     navigate("/mypage");
-        // } catch (error) {
-        //     console.error("Feil ved registrering:", error);
-        // }
+        const createUser = {
+            name: formData.userName,
+            email: formData.email,
+            role: "user",
+        };
+
+        try {
+            const newUser = await apiPOST("/users", createUser);
+            dispatch(addUser(newUser)); // Oppdaterer redux users[]
+            localStorage.setItem("currentUser", JSON.stringify(newUser)); // lagrer i localStorage
+            console.log("Ny bruker bør være opprettet nå!");
+        } catch (error) {
+            console.error("Feil ved registrering:", error);
+        }
     };
+    useEffect(() => {
+        if (currentUser) {
+            navigate("/mypage");
+        }
+    }, [currentUser, navigate]);
 
     const handleInput = (name: string, value: string) => {
         setFormData((prev) => ({
