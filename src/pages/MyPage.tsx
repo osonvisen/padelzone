@@ -32,7 +32,7 @@ const MyPage = () => {
                     {currentBookings.map((booking, index) => (
                         <li key={booking._id}>
                             Booking {index + 1}: Dato: {booking.date} - Bane{" "}
-                            {booking.courtId} - tid: {booking.timeslot[0]}
+                            {booking.courtId} - tid: {booking.timeslot}
                         </li>
                     ))}
                 </>
