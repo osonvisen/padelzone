@@ -4,7 +4,7 @@ import { RootState } from "../redux/store";
 import { apiPOST } from "../api/apiPOST";
 import { addBooking } from "../redux/bookingSlice";
 
-const CreateBooking: React.FC = () => {
+const RegisterBooking: React.FC = () => {
     const dispatch = useDispatch();
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
@@ -16,9 +16,7 @@ const CreateBooking: React.FC = () => {
 
     const availableCourts = players === 2 ? [7, 8] : [1, 2, 3, 4, 5, 6]; // Filtrerer tilgjengelige baner basert på antall spillere
 
-    // if (!currentUser) {
-    //     return <p>Vennligst logg inn for å registrere en booking.</p>;
-    // }
+    // Filtrering av ledige baner
 
     const handleBooking = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -110,4 +108,4 @@ const CreateBooking: React.FC = () => {
     );
 };
 
-export default CreateBooking;
+export default RegisterBooking;
