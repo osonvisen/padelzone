@@ -53,6 +53,7 @@ const userSlice = createSlice({
             if (index !== -1) {
                 state.users[index] = action.payload;
             }
+            localStorage.setItem("users", JSON.stringify(state.users));
         },
         setCurrentUser: (state, action: PayloadAction<User | null>) => {
             state.currentUser = action.payload;

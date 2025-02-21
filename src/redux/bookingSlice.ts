@@ -35,6 +35,7 @@ const bookingSlice = createSlice({
             if (index !== -1) {
                 state.bookings[index] = action.payload;
             }
+            localStorage.setItem("bookings", JSON.stringify(state.bookings));
         },
         removeBooking: (state, action: PayloadAction<string>) => {
             state.bookings = state.bookings.filter(

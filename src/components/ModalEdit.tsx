@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { apiPOST } from "../api/apiPOST";
 import { editBooking } from "../redux/bookingSlice";
 import { editUser } from "../redux/userSlice";
+import apiPUT from "../api/apiPUT";
 
 interface EditProps {
     item: {
@@ -35,7 +35,7 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
 
     const handleSave = async () => {
         try {
-            await apiPOST(type, updatedObject);
+            const edited = await apiPUT(updatedObject, type);
             if (type === "bookings") {
                 dispatch(editBooking(updatedObject));
             } else {
@@ -108,6 +108,9 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
                         <option value="user">Bruker</option>
                         <option value="admin">Admin</option>
                     </select>
+
+                    <button onClick={handleSave}>Lagre</button>
+                    <button onClick={onClose}>Avbryt</button>
                 </>
             )}
         </div>
