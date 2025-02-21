@@ -46,6 +46,14 @@ const userSlice = createSlice({
                 (user) => user._id !== action.payload
             );
         },
+        editUser: (state, action: PayloadAction<User | null>) => {
+            const index = state.users.findIndex(
+                (user) => user._id === action.payload?._id
+            );
+            if (index !== -1) {
+                state.users[index] = action.payload;
+            }
+        },
         setCurrentUser: (state, action: PayloadAction<User | null>) => {
             state.currentUser = action.payload;
             localStorage.setItem("currentUser", JSON.stringify(action.payload));
@@ -61,6 +69,7 @@ export const {
     setUsers,
     addUser,
     setCurrentUser,
+    editUser,
     removeCurrentUser,
     removeUser,
 } = userSlice.actions;

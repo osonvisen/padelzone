@@ -24,7 +24,7 @@ const ShowBookings: React.FC = () => {
         return user ? user.name : "Finner ingen navn!";
     };
 
-    const handleDeleteBtn = async (
+    const handleDelete = async (
         bookingId: string,
         type: "bookings" | "users"
     ) => {
@@ -48,7 +48,7 @@ const ShowBookings: React.FC = () => {
                             {booking.timeslot} | <button>Rediger</button>
                             <button
                                 onClick={() =>
-                                    handleDeleteBtn(booking._id, "bookings")
+                                    handleDelete(booking._id, "bookings")
                                 }
                             >
                                 Slett

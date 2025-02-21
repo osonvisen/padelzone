@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { apiPOST } from "../api/apiPOST";
@@ -26,6 +26,11 @@ const RegisterBooking: React.FC = () => {
             [name]: value,
         }));
     };
+
+    useEffect(() => {
+        console.log("Ny timeslot: ", bookingData.timeslot);
+    }, [bookingData.timeslot]);
+
     // Sorterer bort opptatte baner
     // Ledige baner: --------------------------------------------
     const availableCourts = useMemo(() => {
@@ -74,6 +79,12 @@ const RegisterBooking: React.FC = () => {
         try {
             const createdBooking = await apiPOST("/bookings", newBooking);
             dispatch(addBooking(createdBooking)); // Sender til api først, og får returnert _id før vi legger til i redux og localStorage
+            setBookingData({
+                date: bookingData.date,
+                players: bookingData.players,
+                courtId: bookingData.courtId,
+                timeslot: "",
+            });
         } catch (error) {
             console.error("Feil ved booking: ", error);
         }
@@ -131,7 +142,7 @@ const RegisterBooking: React.FC = () => {
                 }
             >
                 <option value="" disabled>
-                    Velg bane først!
+                    Tidspunkt
                 </option>
                 {availableTimeslots.map((time) => (
                     <option key={time} value={time}>
