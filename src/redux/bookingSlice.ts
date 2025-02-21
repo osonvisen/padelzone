@@ -28,8 +28,14 @@ const bookingSlice = createSlice({
             state.bookings.push(action.payload);
             localStorage.setItem("bookings", JSON.stringify(state.bookings));
         },
+        removeBooking: (state, action: PayloadAction<string>) => {
+            state.bookings = state.bookings.filter(
+                (booking) => booking._id !== action.payload
+            );
+            localStorage.setItem("bookings", JSON.stringify(state.bookings));
+        },
     },
 });
 
-export const { setBookings, addBooking } = bookingSlice.actions;
+export const { setBookings, addBooking, removeBooking } = bookingSlice.actions;
 export default bookingSlice.reducer;

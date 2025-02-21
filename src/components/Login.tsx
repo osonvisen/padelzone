@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { setCurrentUser } from "../redux/userSlice";
 import InputForm from "./InputForm";
+import { useNavigate } from "react-router-dom";
 
 interface LoginProps {
     onClose: () => void;
@@ -17,6 +18,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
     );
+    const navigate = useNavigate();
 
     const fields = [
         {
@@ -35,7 +37,12 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
         if (existingUser) {
             dispatch(setCurrentUser(existingUser));
             onClose(); // Lukker Modalen etter innloggingen er vellykket
-            console.log("Logget inn som ", currentUser.name);
+
+            if (existingUser.role === "admin") {
+                navigate("/admin");
+            } else {
+                navigate("/mypage");
+            }
         } else {
             alert("Fant ingen bruker!");
         }

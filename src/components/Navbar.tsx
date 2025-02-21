@@ -3,7 +3,7 @@ import { RootState } from "../redux/store";
 import logo from "../assets/padelzone-logo.png";
 import "./styling/Navbar.css";
 import { useDispatch, useSelector } from "react-redux";
-import { delCurrentUser } from "../redux/userSlice";
+import { removeCurrentUser } from "../redux/userSlice";
 import { useState } from "react";
 import ModalLogin from "./ModalLogin";
 import Login from "./Login";
@@ -17,7 +17,7 @@ const Navbar: React.FC = () => {
     const navigate = useNavigate();
 
     const handleLogout = () => {
-        dispatch(delCurrentUser(null));
+        dispatch(removeCurrentUser(null));
         navigate("/");
     };
 

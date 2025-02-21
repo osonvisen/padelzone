@@ -12,10 +12,22 @@ interface UserState {
     currentUser: User | null;
 }
 
+const adminUser: User = {
+    _id: "administrator",
+    name: "admin",
+    email: "admin@padelzone.no",
+    role: "admin",
+};
+
 const initialState: UserState = {
     users: JSON.parse(localStorage.getItem("users") || "[]"), // Henter brukere fra localStorage
     currentUser: JSON.parse(localStorage.getItem("currentUser") || "null"),
 };
+
+if (!initialState.users.some((user) => user.email === adminUser.email)) {
+    initialState.users.push(adminUser);
+    localStorage.setItem("users", JSON.stringify(initialState.users));
+}
 
 const userSlice = createSlice({
     name: "user",
@@ -29,17 +41,27 @@ const userSlice = createSlice({
             state.users.push(action.payload);
             localStorage.setItem("users", JSON.stringify(state.users)); // Oppdater localStorage
         },
+        removeUser: (state, action: PayloadAction<string>) => {
+            state.users = state.users.filter(
+                (user) => user._id !== action.payload
+            );
+        },
         setCurrentUser: (state, action: PayloadAction<User | null>) => {
             state.currentUser = action.payload;
             localStorage.setItem("currentUser", JSON.stringify(action.payload));
         },
-        delCurrentUser: (state, action: PayloadAction<User | null>) => {
+        removeCurrentUser: (state, action: PayloadAction<User | null>) => {
             state.currentUser = action.payload;
             localStorage.removeItem("currentUser");
         },
     },
 });
 
-export const { setUsers, addUser, setCurrentUser, delCurrentUser } =
-    userSlice.actions;
+export const {
+    setUsers,
+    addUser,
+    setCurrentUser,
+    removeCurrentUser,
+    removeUser,
+} = userSlice.actions;
 export default userSlice.reducer;
