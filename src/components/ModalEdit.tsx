@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { editBooking } from "../redux/bookingSlice";
 import { editUser } from "../redux/userSlice";
 import apiPUT from "../api/apiPUT";
+import "./styling/ModalEdit.css";
 
 interface EditProps {
     item: {
@@ -50,69 +51,80 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
 
     return (
         <div className="modaledit">
-            <h3>Rediger {type === "bookings" ? "booking" : "bruker"}</h3>
+            <div className="modal-content">
+                <h2>Rediger {type === "bookings" ? "booking" : "bruker"}</h2>
 
-            {type === "bookings" ? (
-                <>
-                    <label>Bane:</label>
-                    <select
-                        value={updatedObject.courtId}
-                        onChange={(e) =>
-                            handleChange("courtId", e.target.value)
-                        }
-                    >
-                        {[...Array(8)].map((_, i) => (
-                            <option key={i} value={(i + 1).toString()}>
-                                Bane {i + 1}
-                            </option>
-                        ))}
-                    </select>
+                {type === "bookings" ? (
+                    <>
+                        <label>Bane:</label>
+                        <select
+                            value={updatedObject.courtId}
+                            onChange={(e) =>
+                                handleChange("courtId", e.target.value)
+                            }
+                        >
+                            {[...Array(8)].map((_, i) => (
+                                <option key={i} value={(i + 1).toString()}>
+                                    Bane {i + 1}
+                                </option>
+                            ))}
+                        </select>
 
-                    <label>Dato:</label>
-                    <input
-                        type="date"
-                        value={updatedObject.date}
-                        onChange={(e) => handleChange("date", e.target.value)}
-                    />
+                        <label>Dato:</label>
+                        <input
+                            type="date"
+                            value={updatedObject.date}
+                            onChange={(e) =>
+                                handleChange("date", e.target.value)
+                            }
+                        />
 
-                    <label>Timeslot:</label>
-                    <input
-                        type="text"
-                        value={updatedObject.timeslot}
-                        onChange={(e) =>
-                            handleChange("timeslot", e.target.value)
-                        }
-                    />
-                </>
-            ) : (
-                <>
-                    <label>Navn:</label>
-                    <input
-                        type="text"
-                        value={updatedObject.name}
-                        onChange={(e) => handleChange("name", e.target.value)}
-                    />
+                        <label>Timeslot:</label>
+                        <input
+                            type="text"
+                            value={updatedObject.timeslot}
+                            onChange={(e) =>
+                                handleChange("timeslot", e.target.value)
+                            }
+                        />
+                    </>
+                ) : (
+                    <>
+                        <label>Navn:</label>
+                        <input
+                            type="text"
+                            value={updatedObject.name}
+                            onChange={(e) =>
+                                handleChange("name", e.target.value)
+                            }
+                        />
 
-                    <label>E-post:</label>
-                    <input
-                        type="email"
-                        value={updatedObject.email}
-                        onChange={(e) => handleChange("email", e.target.value)}
-                    />
+                        <label>E-post:</label>
+                        <input
+                            type="email"
+                            value={updatedObject.email}
+                            onChange={(e) =>
+                                handleChange("email", e.target.value)
+                            }
+                        />
 
-                    <label>Rolle:</label>
-                    <select
-                        value={updatedObject.role}
-                        onChange={(e) => handleChange("role", e.target.value)}
-                    >
-                        <option value="user">Bruker</option>
-                        <option value="admin">Admin</option>
-                    </select>
-
+                        <label>Rolle:</label>
+                        <select
+                            value={updatedObject.role}
+                            onChange={(e) =>
+                                handleChange("role", e.target.value)
+                            }
+                        >
+                            <option value="user">Bruker</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </>
+                )}
+                <div className="modal-actions">
                     <button onClick={handleSave}>Lagre</button>
                     <button onClick={onClose}>Avbryt</button>
-                </>
-            )}
+                </div>
+            </div>
         </div>
     );
 };
