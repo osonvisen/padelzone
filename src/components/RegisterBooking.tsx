@@ -10,18 +10,13 @@ const RegisterBooking: React.FC = () => {
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
     );
-    const [date, setDate] = useState("");
-    const [players, setPlayers] = useState(2);
-    const [timeslot, setTimeslot] = useState("");
-    const [courtId, setCourtId] = useState<number | null>(null);
 
-    // const availableCourts = players === 2 ? [7, 8] : [1, 2, 3, 4, 5, 6]; // Filtrerer tilgjengelige baner basert på antall spillere
     // ---------------------------
     // Vi må holde orden på bookingene at vi ikke dobbelbooker!
     const [bookingData, setBookingData] = useState({
+        date: "",
         courtId: "",
         players: "2",
-        date: "",
         timeslot: "",
     });
     // Holder rede på endriner i pre-bookingen
@@ -31,7 +26,7 @@ const RegisterBooking: React.FC = () => {
             [name]: value,
         }));
     };
-    // Sorterer bort opptatte tidspunkt og baner
+    // Sorterer bort opptatte baner
     // Ledige baner: --------------------------------------------
     const availableCourts = useMemo(() => {
         if (!bookingData.date)
@@ -49,7 +44,7 @@ const RegisterBooking: React.FC = () => {
         );
     }, [bookings, bookingData.date]);
 
-    // Sorterer på tidspunkt for valgt dato og bane
+    // Sorterer bort opptatte tidspunkt for valgt dato og bane
     // Ledige tidspunkt: ------------------------------------------
     const availableTimeslots = useMemo(() => {
         if (!bookingData.courtId || !bookingData.date) return [];
@@ -62,22 +57,19 @@ const RegisterBooking: React.FC = () => {
             )
             .map((booking) => booking.timeslot);
 
-        return Array.from({ length: 14 }, (_, i) => `${8 + i}`).filter(
-            (time) => !bookedTimeslots.includes(time)
+        return Array.from({ length: 14 }, (_, i) => 8 + i).filter(
+            (time) => !bookedTimeslots.includes(time.toString())
         );
     }, [bookings, bookingData.courtId, bookingData.date]);
 
     const handleBooking = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!courtId || !date || !timeslot || !players)
+        if (!bookingData.courtId || !bookingData.date || !bookingData.timeslot)
             return alert("Alle feltene må fylles ut!");
 
         const newBooking = {
             userId: currentUser._id,
-            courtId,
-            players,
-            date,
-            timeslot: [timeslot],
+            ...bookingData,
         };
         try {
             const createdBooking = await apiPOST("/bookings", newBooking);
@@ -94,14 +86,16 @@ const RegisterBooking: React.FC = () => {
             <label>Velg dato:</label>
             <input
                 type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={bookingData.date}
+                onChange={(e) => handleBookingChange("date", e.target.value)}
             />
+
+            {/* ------------------------------------------------------- */}
 
             <label>Velg antall spillere:</label>
             <select
-                value={players}
-                onChange={(e) => setPlayers(Number(e.target.value))}
+                value={bookingData.players}
+                onChange={(e) => handleBookingChange("players", e.target.value)}
             >
                 {[2, 4].map((num) => (
                     <option key={num} value={num}>
@@ -110,47 +104,62 @@ const RegisterBooking: React.FC = () => {
                 ))}
             </select>
 
-            <label>Velg timeslot:</label>
-            <select
-                value={timeslot || ""}
-                onChange={(e) => setTimeslot(String(e.target.value))}
-            >
-                <option value="" disabled>
-                    Velg tidspunkt
-                </option>
-                {Array.from({ length: 14 }, (_, i) => 8 + i).map((hour) => (
-                    <option key={hour} value={hour}>
-                        {hour}:00 - {hour + 1}:00
-                    </option>
-                ))}
-            </select>
+            {/* ------------------------------------------------------- */}
 
             <label>Velg bane:</label>
             <select
-                value={courtId || ""}
-                onChange={(e) => setCourtId(Number(e.target.value))}
+                value={bookingData.courtId}
+                onChange={(e) => handleBookingChange("courtId", e.target.value)}
             >
                 <option value="" disabled>
                     Velg bane
                 </option>
-                {availableCourts.map((court) => (
-                    <option key={court} value={court}>
-                        Bane {court}
+                {availableCourts.map((courtId) => (
+                    <option key={courtId} value={courtId}>
+                        Bane {courtId}
                     </option>
                 ))}
             </select>
 
+            {/* ------------------------------------------------------- */}
+
+            <label>Velg tidspunkt: </label>
+            <select
+                value={bookingData.timeslot}
+                onChange={(e) =>
+                    handleBookingChange("timeslot", e.target.value)
+                }
+            >
+                <option value="" disabled>
+                    Velg bane først!
+                </option>
+                {availableTimeslots.map((time) => (
+                    <option key={time} value={time}>
+                        {time}:00
+                    </option>
+                ))}
+            </select>
+
+            {/* ------------------------------------------------------- */}
+
+            <p>
+                {bookingData.date} - {bookingData.courtId} -{" "}
+                {bookingData.timeslot}
+            </p>
             {currentUser ? (
                 <button
                     onClick={handleBooking}
-                    disabled={!date || !courtId || !timeslot || !players}
+                    disabled={
+                        !bookingData.date ||
+                        !bookingData.courtId ||
+                        !bookingData.timeslot
+                    }
                 >
                     Book bane
                 </button>
             ) : (
                 <>
-                    <button>Sjekk tilgjengelighet for valgt tidspunkt</button>
-                    <p>Logg inn for å booke bane!</p>
+                    <p>Logg inn, eller registrer deg, for å booke bane!</p>
                 </>
             )}
         </div>

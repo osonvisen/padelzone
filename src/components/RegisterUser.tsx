@@ -11,6 +11,7 @@ const RegisterUser: React.FC = () => {
         userName: "",
         email: "",
     });
+    const users = useSelector((state: RootState) => state.users.users);
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
     );
@@ -35,7 +36,16 @@ const RegisterUser: React.FC = () => {
     ];
 
     const handleRegister = async () => {
-        console.log(formData.userName, formData.email);
+        if (!formData.userName || !formData.email)
+            return alert("Fyll ut alle feltene!");
+
+        const existingUser = users.some(
+            (user) =>
+                user.email.toLocaleLowerCase() ===
+                formData.email.toLocaleLowerCase()
+        );
+        if (existingUser)
+            return alert("Det ser ut til at denne brukeren allerede finnes!");
 
         const createUser = {
             name: formData.userName,
@@ -45,7 +55,7 @@ const RegisterUser: React.FC = () => {
 
         try {
             const newUser = await apiPOST("/users", createUser);
-            dispatch(addUser(newUser)); // Oppdaterer redux users[]
+            dispatch(addUser(newUser)); // Oppdaterer redux users
             localStorage.setItem("currentUser", JSON.stringify(newUser)); // lagrer i localStorage
             console.log("Ny bruker bør være opprettet nå!");
         } catch (error) {

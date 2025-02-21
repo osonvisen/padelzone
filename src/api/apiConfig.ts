@@ -1,4 +1,4 @@
 const apiUrl = "https://crudcrud.com/api/";
-const apiKey = "17670ac7eda6449ab8c4884d12cf3e68";
+const apiKey = "b774ba25ce494f2f9287df90f9641950";
 
 export const API_BASE_URL = apiUrl + apiKey;
