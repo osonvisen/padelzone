@@ -34,14 +34,14 @@ const ShowUsers = () => {
             </div>
             <ul>
                 {filteredUsers.map((user) => (
-                    <li key={user._id}>
+                    <div key={user._id} className="show-spacing">
                         Navn: {user.name} | E-post: {user.email} | Rolle:{" "}
                         {user.role}
                         <button onClick={() => setEditingUser(user)}>
                             Rediger
                         </button>
                         <button>Slett</button>
-                    </li>
+                    </div>
                 ))}
             </ul>
             {editingUser && (

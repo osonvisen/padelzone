@@ -80,7 +80,7 @@ const ShowBookings: React.FC = () => {
             {filteredBookings.length > 0 ? (
                 <ul>
                     {filteredBookings.map((booking, index) => (
-                        <div key={index}>
+                        <div key={index} className="show-spacing">
                             Navn: {getUserName(booking.userId)} - Dato:{" "}
                             {booking.date} - Bane: {booking.courtId} - Tid:{" "}
                             {booking.timeslot} |{" "}

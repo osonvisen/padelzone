@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { apiPOST } from "../api/apiPOST";
 import { addBooking } from "../redux/bookingSlice";
+import "./styling/Register.css";
 
 const RegisterBooking: React.FC = () => {
     const dispatch = useDispatch();
@@ -106,14 +107,18 @@ const RegisterBooking: React.FC = () => {
                         onChange={(e) =>
                             handleBookingChange("userId", e.target.value)
                         }
+                        className="show-spacing"
                     >
-                        <option value="">Velg bruker</option>
+                        <option value="" disabled>
+                            Velg bruker
+                        </option>
                         {users.map((user) => (
                             <option key={user._id} value={user._id}>
                                 {user.name}
                             </option>
                         ))}
                     </select>
+                    <br />
                 </>
             )}
 
@@ -122,7 +127,9 @@ const RegisterBooking: React.FC = () => {
                 type="date"
                 value={bookingData.date}
                 onChange={(e) => handleBookingChange("date", e.target.value)}
+                className="show-spacing"
             />
+            <br />
 
             {/* ------------------------------------------------------- */}
 
@@ -130,6 +137,7 @@ const RegisterBooking: React.FC = () => {
             <select
                 value={bookingData.players}
                 onChange={(e) => handleBookingChange("players", e.target.value)}
+                className="show-spacing"
             >
                 {[2, 4].map((num) => (
                     <option key={num} value={num}>
@@ -137,13 +145,15 @@ const RegisterBooking: React.FC = () => {
                     </option>
                 ))}
             </select>
+            <br />
 
             {/* ------------------------------------------------------- */}
 
-            <label>Velg bane:</label>
+            <label className="register-label">Velg bane:</label>
             <select
                 value={bookingData.courtId}
                 onChange={(e) => handleBookingChange("courtId", e.target.value)}
+                className="show-spacing"
             >
                 <option value="" disabled>
                     Velg bane
@@ -154,6 +164,7 @@ const RegisterBooking: React.FC = () => {
                     </option>
                 ))}
             </select>
+            <br />
 
             {/* ------------------------------------------------------- */}
 
@@ -163,6 +174,7 @@ const RegisterBooking: React.FC = () => {
                 onChange={(e) =>
                     handleBookingChange("timeslot", e.target.value)
                 }
+                className="show-spacing"
             >
                 <option value="" disabled>
                     Tidspunkt
@@ -173,6 +185,7 @@ const RegisterBooking: React.FC = () => {
                     </option>
                 ))}
             </select>
+            <br />
 
             {/* ------------------------------------------------------- */}
 

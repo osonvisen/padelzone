@@ -1,0 +1,21 @@
+.show-bookings,
+.show-users {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 20px;
+    background-color: beige;
+}
+.register-booking {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 0px 20px;
+    padding-bottom: 20px;
+    background-color: beige;
+}
+.show-spacing {
+    margin-bottom: 12px;
+}

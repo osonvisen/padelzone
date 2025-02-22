@@ -5,6 +5,7 @@ import ModalLogin from "../components/ModalLogin";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import "./Styling/Styling.css";
 
 const Home: React.FC = () => {
     const currentUser = useSelector(
@@ -25,9 +26,12 @@ const Home: React.FC = () => {
     }, [currentUser, navigate]);
 
     return (
-        <div>
+        <div className="main-container">
             <h1>Velkommen til PadelZone</h1>
-            <RegisterBooking />
+            <div className="register-booking">
+                <RegisterBooking />
+            </div>
+
             {currentUser ? (
                 <>
                     <h1>Nothing to see here!</h1>
