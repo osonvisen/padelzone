@@ -14,13 +14,27 @@ const ShowBookings: React.FC = () => {
         (state: RootState) => state.users.currentUser
     );
     const [editingBooking, setEditingBooking] = useState(null);
+    const [filterDate, setFilterDate] = useState("");
+    const [filterUser, setFilterUser] = useState("");
+
     const dispatch = useDispatch();
 
-    // Er bruker admin?
-    const filteredBookings =
-        currentUser?.role === "admin"
-            ? bookings // admin ser alle bookinger
-            : bookings.filter((booking) => booking.userId === currentUser?._id); // kun brukerens bookinger
+    // Filtrering på dato eller brukernavn
+    const filteredBookings = bookings.filter((booking) => {
+        const filterOnDate = filterDate ? booking.date === filterDate : true;
+        const filterOnUser = filterUser
+            ? users
+                  .find((user) => user._id === booking.userId)
+                  ?.name.toLowerCase()
+                  .includes(filterUser.toLowerCase())
+            : true;
+        return (
+            (currentUser?.role === "admin" ||
+                booking.userId === currentUser?._id) &&
+            filterOnDate &&
+            filterOnUser
+        );
+    });
 
     const getUserName = (userId: string) => {
         const user = users.find((u) => u._id === userId);
@@ -42,10 +56,31 @@ const ShowBookings: React.FC = () => {
                     ? "Alle bookinger"
                     : "Mine bookinger"}
             </h2>
+            <div>
+                <label>Filtrer på dato: </label>
+                <input
+                    type="date"
+                    value={filterDate}
+                    onChange={(e) => setFilterDate(e.target.value)}
+                />
+
+                {/* Admin kan også filtrere på navn */}
+                {currentUser?.role === "admin" && (
+                    <>
+                        <label>Filtrer på navn: </label>
+                        <input
+                            type="text"
+                            placeholder="Søk etter navn.."
+                            value={filterUser}
+                            onChange={(e) => setFilterUser(e.target.value)}
+                        />
+                    </>
+                )}
+            </div>
             {filteredBookings.length > 0 ? (
                 <ul>
                     {filteredBookings.map((booking, index) => (
-                        <li key={index}>
+                        <div key={index}>
                             Navn: {getUserName(booking.userId)} - Dato:{" "}
                             {booking.date} - Bane: {booking.courtId} - Tid:{" "}
                             {booking.timeslot} |{" "}
@@ -59,7 +94,7 @@ const ShowBookings: React.FC = () => {
                             >
                                 Slett
                             </button>
-                        </li>
+                        </div>
                     ))}
                 </ul>
             ) : (

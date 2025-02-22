@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { editBooking } from "../redux/bookingSlice";
 import { editUser } from "../redux/userSlice";
 import apiPUT from "../api/apiPUT";
 import "./styling/ModalEdit.css";
+import { RootState } from "../redux/store";
 
 interface EditProps {
     item: {
         _id: string;
+        userId?: string;
         courtId?: string;
         date?: string;
         timeslot?: string;
@@ -21,6 +23,10 @@ interface EditProps {
 
 const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
     const dispatch = useDispatch();
+    const users = useSelector((state: RootState) => state.users.users);
+    const currentUser = useSelector(
+        (state: RootState) => state.users.currentUser
+    );
     const [updatedObject, setUpdatedObject] = useState(item);
 
     useEffect(() => {
@@ -36,7 +42,7 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
 
     const handleSave = async () => {
         try {
-            const edited = await apiPUT(updatedObject, type);
+            await apiPUT(updatedObject, type);
             if (type === "bookings") {
                 dispatch(editBooking(updatedObject));
             } else {
@@ -56,6 +62,24 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
 
                 {type === "bookings" ? (
                     <>
+                        {currentUser?.role === "admin" && (
+                            <div>
+                                <label>Ny bruker? </label>
+                                <select
+                                    value={updatedObject.userId}
+                                    onChange={(e) =>
+                                        handleChange("userId", e.target.value)
+                                    }
+                                >
+                                    <option value=""></option>
+                                    {users.map((user) => (
+                                        <option key={user._id} value={user._id}>
+                                            {user.name}{" "}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
                         <label>Bane:</label>
                         <select
                             value={updatedObject.courtId}

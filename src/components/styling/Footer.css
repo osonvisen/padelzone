@@ -1,0 +1,14 @@
+footer {
+    padding: 15px 0;
+    max-width: 1200px;
+    text-align: center;
+    background-color: #004aad;
+    color: white;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+
+footer a {
+    color: white;
+}

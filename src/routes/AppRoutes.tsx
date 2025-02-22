@@ -4,6 +4,7 @@ import MyPage from "../pages/MyPage";
 import Admin from "../pages/Admin";
 import Navbar from "../components/Navbar";
 import RegisterUser from "../components/RegisterUser";
+import Footer from "../components/Footer";
 // import ProtectedRoute from "./ProtectedRoutes";
 // import Navbar from "../components/Navbar";
 
@@ -17,6 +18,7 @@ const AppRoutes: React.FC = () => {
                 <Route path="/mypage" element={<MyPage />} />
                 <Route path="/admin" element={<Admin />} />
             </Routes>
+            <Footer />
         </Router>
     );
 };

@@ -19,10 +19,9 @@ const MyPage = () => {
             <div className="welcome">
                 <h2>Min side</h2>
             </div>
-            <ShowBookings />
-
-            <p></p>
             <RegisterBooking />
+            <p></p>
+            <ShowBookings />
         </>
     );
 };

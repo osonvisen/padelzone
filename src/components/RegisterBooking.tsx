@@ -7,6 +7,7 @@ import { addBooking } from "../redux/bookingSlice";
 const RegisterBooking: React.FC = () => {
     const dispatch = useDispatch();
     const bookings = useSelector((state: RootState) => state.bookings.bookings);
+    const users = useSelector((state: RootState) => state.users.users);
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
     );
@@ -14,6 +15,7 @@ const RegisterBooking: React.FC = () => {
     // ---------------------------
     // Vi må holde orden på bookingene at vi ikke dobbelbooker!
     const [bookingData, setBookingData] = useState({
+        userId: currentUser?._id || "",
         date: "",
         courtId: "",
         players: "2",
@@ -80,6 +82,7 @@ const RegisterBooking: React.FC = () => {
             const createdBooking = await apiPOST("/bookings", newBooking);
             dispatch(addBooking(createdBooking)); // Sender til api først, og får returnert _id før vi legger til i redux og localStorage
             setBookingData({
+                userId: currentUser?._id || "",
                 date: bookingData.date,
                 players: bookingData.players,
                 courtId: bookingData.courtId,
@@ -93,6 +96,26 @@ const RegisterBooking: React.FC = () => {
     return (
         <div>
             <h2>Registrer Booking</h2>
+
+            {/* Admin kan velge bruker */}
+            {currentUser?.role === "admin" && (
+                <>
+                    <label>Velg bruker: </label>
+                    <select
+                        value={bookingData.userId}
+                        onChange={(e) =>
+                            handleBookingChange("userId", e.target.value)
+                        }
+                    >
+                        <option value="">Velg bruker</option>
+                        {users.map((user) => (
+                            <option key={user._id} value={user._id}>
+                                {user.name}
+                            </option>
+                        ))}
+                    </select>
+                </>
+            )}
 
             <label>Velg dato:</label>
             <input
@@ -153,10 +176,6 @@ const RegisterBooking: React.FC = () => {
 
             {/* ------------------------------------------------------- */}
 
-            <p>
-                {bookingData.date} - {bookingData.courtId} -{" "}
-                {bookingData.timeslot}
-            </p>
             {currentUser ? (
                 <button
                     onClick={handleBooking}

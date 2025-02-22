@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../redux/userSlice";
+import { addUser, setCurrentUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
 import { apiPOST } from "../api/apiPOST";
 import InputForm from "./InputForm";
@@ -54,17 +54,21 @@ const RegisterUser: React.FC = () => {
         };
 
         try {
-            const newUser = await apiPOST("/users", createUser);
+            const newUser = await apiPOST("/users", createUser); // Får tilbake bruker med _id.
             dispatch(addUser(newUser)); // Oppdaterer redux users
+            dispatch(setCurrentUser(newUser));
             localStorage.setItem("currentUser", JSON.stringify(newUser)); // lagrer i localStorage
             console.log("Ny bruker bør være opprettet nå!");
+            navigate("/mypage");
         } catch (error) {
             console.error("Feil ved registrering:", error);
         }
     };
     useEffect(() => {
         if (currentUser) {
-            navigate("/mypage");
+            setTimeout(() => {
+                navigate("/mypage");
+            }, 500);
         }
     }, [currentUser, navigate]);
 
@@ -85,9 +89,6 @@ const RegisterUser: React.FC = () => {
                 onSubmit={handleRegister}
                 buttonLabel="Registrer"
             />
-
-            <p>{formData.userName}</p>
-            <p>{formData.email}</p>
         </>
     );
 };
