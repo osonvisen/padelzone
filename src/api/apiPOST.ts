@@ -1,6 +1,6 @@
 import { API_BASE_URL } from "./apiConfig";
 
-export const apiPOST = async (resource: string, data: object) => {
+const apiPOST = async (resource: string, data: object) => {
     try {
         console.log("Mottatt: ", resource, data);
         const response = await fetch(API_BASE_URL + resource, {
@@ -16,3 +16,4 @@ export const apiPOST = async (resource: string, data: object) => {
         console.error(error);
     }
 };
+export default apiPOST;

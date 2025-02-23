@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setUsers } from "./redux/userSlice";
 import { setBookings } from "./redux/bookingSlice";
-import { apiGET } from "./api/apiGET";
+import apiGET from "./api/apiGET";
 import AppRoutes from "./routes/AppRoutes";
 
 const App: React.FC = () => {
@@ -10,16 +10,12 @@ const App: React.FC = () => {
 
     useEffect(() => {
         const loadData = async () => {
-            console.log("Sjekker localStorage...");
-
             try {
                 // Hente brukere fra localStorage eller API
                 const storedUsers = localStorage.getItem("users");
                 if (storedUsers) {
-                    console.log("Laster brukere fra localStorage");
                     dispatch(setUsers(JSON.parse(storedUsers)));
                 } else {
-                    console.log("Henter brukere fra API...");
                     const usersFromAPI = await apiGET("users");
                     if (usersFromAPI.length > 0) {
                         dispatch(setUsers(usersFromAPI));
@@ -33,10 +29,8 @@ const App: React.FC = () => {
                 // Hente bookinger fra localStorage eller API
                 const storedBookings = localStorage.getItem("bookings");
                 if (storedBookings) {
-                    console.log("Laster bookinger fra localStorage");
                     dispatch(setBookings(JSON.parse(storedBookings)));
                 } else {
-                    console.log("Henter bookinger fra API...");
                     const bookingsFromAPI = await apiGET("bookings");
                     if (bookingsFromAPI.length > 0) {
                         dispatch(setBookings(bookingsFromAPI));

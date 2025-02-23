@@ -1,7 +1,6 @@
 import { API_BASE_URL } from "./apiConfig";
 
-export const apiGET = async (resource: string) => {
-    console.log(`URL: ${API_BASE_URL}${resource}`);
+const apiGET = async (resource: string) => {
     try {
         const response = await fetch(`${API_BASE_URL}${resource}`);
         if (!response.ok) {
@@ -14,3 +13,4 @@ export const apiGET = async (resource: string) => {
         return [];
     }
 };
+export default apiGET;

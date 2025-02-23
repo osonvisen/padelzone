@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
-import { apiPOST } from "../api/apiPOST";
+import apiPOST from "../api/apiPOST";
 import { addBooking } from "../redux/bookingSlice";
 import "./styling/Register.css";
 
@@ -31,7 +31,7 @@ const RegisterBooking: React.FC = () => {
     };
 
     useEffect(() => {
-        console.log("Ny timeslot: ", bookingData.timeslot);
+        // console.log(bookingData.timeslot);
     }, [bookingData.timeslot]);
 
     // Sorterer bort opptatte baner
@@ -76,7 +76,6 @@ const RegisterBooking: React.FC = () => {
             return alert("Alle feltene må fylles ut!");
 
         const newBooking = {
-            userId: currentUser._id,
             ...bookingData,
         };
         try {
@@ -149,14 +148,17 @@ const RegisterBooking: React.FC = () => {
 
             {/* ------------------------------------------------------- */}
 
-            <label className="register-label">Velg bane:</label>
+            <label htmlFor="courtSelect" className="register-label">
+                Velg bane:
+            </label>
             <select
                 value={bookingData.courtId}
                 onChange={(e) => handleBookingChange("courtId", e.target.value)}
                 className="show-spacing"
+                id="courtSelect"
             >
                 <option value="" disabled>
-                    Velg bane
+                    nr
                 </option>
                 {availableCourts.map((courtId) => (
                     <option key={courtId} value={courtId}>

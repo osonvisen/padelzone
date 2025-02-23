@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, setCurrentUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
-import { apiPOST } from "../api/apiPOST";
+import apiPOST from "../api/apiPOST";
 import InputForm from "./InputForm";
 import { RootState } from "../redux/store";
 
@@ -36,6 +36,7 @@ const RegisterUser: React.FC = () => {
     ];
 
     const handleRegister = async () => {
+        console.log(users);
         if (!formData.userName || !formData.email)
             return alert("Fyll ut alle feltene!");
 
@@ -52,7 +53,7 @@ const RegisterUser: React.FC = () => {
             email: formData.email,
             role: "user",
         };
-
+        console.log("Da sender vi avgårde!");
         try {
             const newUser = await apiPOST("/users", createUser); // Får tilbake bruker med _id.
             dispatch(addUser(newUser)); // Oppdaterer redux users

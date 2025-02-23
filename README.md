@@ -6,7 +6,7 @@ Jeg har brukt chatGPT til å hjelpe meg å formattere dette dokumentet, samt noe
 
 ## Generelt
 
-Jeg har valgt å ikke bruke passord til å logge inn. Dette fordi det rett og slett er mer effektivt når man tester, og bytte mellom brukere/admin for å se hvordan en funksjon fungerer mens man lager den. Det er i midlertid relativt enkelt å implementere dette senere, ved å legge til et inputfelt for passord ved registrering og ved innlogging.
+Jeg har valgt å ikke bruke passord til å logge inn. Dette fordi det rett og slett er mer effektivt når man tester, og bytter mellom users/admin for å se hvordan en funksjon fungerer mens man lager den. Det er i midlertid relativt enkelt å implementere dette senere, ved å legge til et inputfelt for passord ved registrering og ved innlogging, også lagre dette i databasen.
 
 ## 🌍 **Base URL**
 
@@ -25,6 +25,14 @@ filen finner du under
 ## 📁 **Endepunkter**
 
 ### 📌 **Brukere (`/users`)**
+
+Det finnes én innebygget admin som kan logges inn med adressen:
+
+```json
+admin@padelzone.no
+```
+
+Denne brukeren lagres ikke på databasen, men i localStorage.
 
 | Metode   | Endepunkt     | Beskrivelse                     |
 | -------- | ------------- | ------------------------------- |
