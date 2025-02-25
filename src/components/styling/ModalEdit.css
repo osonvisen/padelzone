@@ -40,3 +40,10 @@
     background: #dc3545;
     color: white;
 }
+
+.edit-user,
+.edit-booking {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}

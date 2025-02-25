@@ -2,7 +2,7 @@
 
 ## chatGPT
 
-Jeg har brukt chatGPT til å hjelpe meg å formattere dette dokumentet, samt noe CSS. Ellers har chatGPT blitt brukt til å vise meg hvordan man bruker enkelte metoder osv. Jeg har ikke klippet ut og brukt, eller limt egen kode inn i chatGPT. Hovedkildene mine er W3School og react.dev. Jeg har også sett kurs på LinkedIn Learning.
+Jeg har brukt chatGPT til å hjelpe meg å formattere dette dokumentet, lage logoen og finne navnet til Padelzone, samt noe CSS. Ellers har chatGPT blitt brukt til å vise meg hvordan man bruker enkelte metoder osv. Jeg har ikke klippet ut og brukt, eller limt egen kode inn i chatGPT. Hovedkildene mine er W3School og react.dev. Jeg har også sett kurs på LinkedIn Learning.
 
 ## Generelt
 

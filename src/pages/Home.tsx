@@ -16,11 +16,10 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         if (currentUser) {
-            console.log("ja vi har en innlogget bruker!");
-            if (currentUser.role === "user") {
-                navigate("/mypage");
-            } else {
+            if (currentUser.role === "admin") {
                 navigate("/admin");
+            } else if (currentUser.role === "user") {
+                navigate("/mypage");
             }
         }
     }, [currentUser, navigate]);
@@ -34,8 +33,7 @@ const Home: React.FC = () => {
 
             {currentUser ? (
                 <>
-                    <h1>Nothing to see here!</h1>
-                    {currentUser.name}
+                    <h1>Du er logget inn som {currentUser.name}</h1>
                 </>
             ) : (
                 <>

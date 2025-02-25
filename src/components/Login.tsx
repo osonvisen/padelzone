@@ -15,9 +15,6 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
     const [formData, setFormData] = useState({
         email: "",
     });
-    const currentUser = useSelector(
-        (state: RootState) => state.users.currentUser
-    );
     const navigate = useNavigate();
 
     const fields = [
@@ -36,8 +33,6 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
         ); // Finner bruker basert på e-post
         if (existingUser) {
             dispatch(setCurrentUser(existingUser));
-            onClose(); // Lukker Modalen etter innloggingen er vellykket
-
             if (existingUser.role === "admin") {
                 navigate("/admin");
             } else {
@@ -46,6 +41,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
         } else {
             alert("Fant ingen bruker!");
         }
+        onClose(); // Lukker Modalen etter innloggingen er vellykket
     };
 
     const handleInput = (name: string, value: string) => {

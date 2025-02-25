@@ -1,20 +1,24 @@
-// import { Navigate, Outlet } from "react-router-dom";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../redux/store";
-// import { rolePermissions, UserRole } from "./roles";
+import { Navigate, Outlet } from "react-router-dom";
+import { rolePermissions } from "./roles";
+import { User } from "../redux/userSlice";
 
-// interface ProtectedRouteProps {
-//     requiredRole: UserRole;
-// }
+interface ProtectedRouteProps {
+    currentUser: User | null;
+    requiredRole: "user" | "admin";
+}
 
-// const ProtectedRoute: React.FC<ProtectedRouteProps> = () => {
-//     const userRole = useSelector((state: RootState) => state.user.role);
+const ProtectedRoutes: React.FC<ProtectedRouteProps> = ({
+    currentUser,
+    requiredRole,
+}) => {
+    if (!currentUser) {
+        return <Navigate to={"/"} replace />;
+    }
 
-//     return rolePermissions[userRole].includes(window.location.pathname) ? (
-//         <Outlet />
-//     ) : (
-//         <Navigate to="/" />
-//     );
-// };
+    if (!rolePermissions[currentUser.role]?.includes(requiredRole)) {
+        return <Navigate to={"/404"} replace />;
+    }
 
-// export default ProtectedRoute;
+    return <Outlet />;
+};
+export default ProtectedRoutes;

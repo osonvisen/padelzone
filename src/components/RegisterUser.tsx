@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, setCurrentUser } from "../redux/userSlice";
 import { useNavigate } from "react-router-dom";
@@ -53,25 +53,20 @@ const RegisterUser: React.FC = () => {
             email: formData.email,
             role: "user",
         };
-        console.log("Da sender vi avgårde!");
+
         try {
             const newUser = await apiPOST("/users", createUser); // Får tilbake bruker med _id.
             dispatch(addUser(newUser)); // Oppdaterer redux users
-            dispatch(setCurrentUser(newUser));
-            localStorage.setItem("currentUser", JSON.stringify(newUser)); // lagrer i localStorage
-            console.log("Ny bruker bør være opprettet nå!");
-            navigate("/mypage");
+
+            if (currentUser?.role !== "admin") {
+                dispatch(setCurrentUser(newUser));
+                localStorage.setItem("currentUser", JSON.stringify(newUser)); // lagrer i localStorage
+                navigate("/mypage");
+            }
         } catch (error) {
             console.error("Feil ved registrering:", error);
         }
     };
-    useEffect(() => {
-        if (currentUser) {
-            setTimeout(() => {
-                navigate("/mypage");
-            }, 500);
-        }
-    }, [currentUser, navigate]);
 
     const handleInput = (name: string, value: string) => {
         setFormData((prev) => ({
@@ -82,7 +77,11 @@ const RegisterUser: React.FC = () => {
 
     return (
         <>
-            <h2>Fyll inn ditt navn og din e-postadresse</h2>
+            {currentUser?.role === "admin" ? (
+                <h2>Registrer ny bruker</h2>
+            ) : (
+                <h2>Fyll inn ditt navn og din e-postadresse</h2>
+            )}
 
             <InputForm
                 fields={fields}

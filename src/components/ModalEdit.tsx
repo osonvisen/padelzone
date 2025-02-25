@@ -61,7 +61,7 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
                 <h2>Rediger {type === "bookings" ? "booking" : "bruker"}</h2>
 
                 {type === "bookings" ? (
-                    <>
+                    <div className="edit-booking">
                         {currentUser?.role === "admin" && (
                             <div>
                                 <label>Ny bruker? </label>
@@ -111,11 +111,12 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
                                 handleChange("timeslot", e.target.value)
                             }
                         />
-                    </>
+                    </div>
                 ) : (
-                    <>
+                    <div className="edit-user">
                         <label>Navn:</label>
                         <input
+                            className="show-spacing"
                             type="text"
                             value={updatedObject.name}
                             onChange={(e) =>
@@ -125,6 +126,7 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
 
                         <label>E-post:</label>
                         <input
+                            className="show-spacing"
                             type="email"
                             value={updatedObject.email}
                             onChange={(e) =>
@@ -142,7 +144,7 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
                             <option value="user">Bruker</option>
                             <option value="admin">Admin</option>
                         </select>
-                    </>
+                    </div>
                 )}
                 <div className="modal-actions">
                     <button onClick={handleSave}>Lagre</button>

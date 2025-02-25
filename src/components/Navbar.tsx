@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RootState } from "../redux/store";
 import logo from "../assets/padelzone-logo.png";
 import "./styling/Navbar.css";
@@ -14,11 +14,11 @@ const Navbar: React.FC = () => {
         (state: RootState) => state.users.currentUser
     );
     const dispatch = useDispatch();
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const handleLogout = () => {
         dispatch(removeCurrentUser(null));
-        navigate("/");
+        // navigate("/");
     };
 
     return (
@@ -40,6 +40,13 @@ const Navbar: React.FC = () => {
                         <li>
                             <Link to="/mypage">Min Side</Link>
                         </li>
+                        {currentUser.role === "admin" ? (
+                            <li>
+                                <Link to="/admin">Admin</Link>
+                            </li>
+                        ) : (
+                            ""
+                        )}
                         <li>
                             <Link to="/" onClick={handleLogout}>
                                 Logg ut

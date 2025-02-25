@@ -1,15 +1,13 @@
 .admin-div {
     max-width: 1200px;
+    min-height: 850px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: space-between;
 }
 
-.admin-reg {
-    padding-bottom: 20px;
-}
-
-.admin-main {
+.admin-show {
     max-width: 1200px;
     display: flex;
     flex-direction: row;
@@ -17,12 +15,27 @@
     width: 100%;
 }
 
-.admin-users {
+.show-users {
     margin-left: 15px;
     background-color: aqua;
 }
 
-.admin-bookings {
+.show-bookings {
     margin-right: 15px;
     background-color: beige;
+}
+
+.admin-register {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
+.register-user {
+    min-height: 200px;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 }

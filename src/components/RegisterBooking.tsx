@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import apiPOST from "../api/apiPOST";
@@ -14,7 +14,7 @@ const RegisterBooking: React.FC = () => {
     );
 
     // ---------------------------
-    // Vi må holde orden på bookingene at vi ikke dobbelbooker!
+    // Inputfeltene til bookingen!
     const [bookingData, setBookingData] = useState({
         userId: currentUser?._id || "",
         date: "",
@@ -29,10 +29,6 @@ const RegisterBooking: React.FC = () => {
             [name]: value,
         }));
     };
-
-    useEffect(() => {
-        // console.log(bookingData.timeslot);
-    }, [bookingData.timeslot]);
 
     // Sorterer bort opptatte baner
     // Ledige baner: --------------------------------------------
@@ -95,7 +91,7 @@ const RegisterBooking: React.FC = () => {
 
     return (
         <div>
-            <h2>Registrer Booking</h2>
+            <h2>Registrer ny booking</h2>
 
             {/* Admin kan velge bruker */}
             {currentUser?.role === "admin" && (

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import "./styling/Modal.css";
+import "./styling/ModalLogin.css";
 
 interface ModalProps {
     isOpen: boolean;

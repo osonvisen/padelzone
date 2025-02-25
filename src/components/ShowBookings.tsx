@@ -83,7 +83,7 @@ const ShowBookings: React.FC = () => {
                         <div key={index} className="show-spacing">
                             Navn: {getUserName(booking.userId)} - Dato:{" "}
                             {booking.date} - Bane: {booking.courtId} - Tid:{" "}
-                            {booking.timeslot} |{" "}
+                            {booking.timeslot}:00 |{" "}
                             <button onClick={() => setEditingBooking(booking)}>
                                 Rediger
                             </button>

@@ -31,6 +31,7 @@ const InputForm: React.FC<InputFormProps> = ({
                 <div key={field.name}>
                     <label>{field.label}</label>
                     <input
+                        className="show-spacing"
                         type={field.type}
                         name={field.name}
                         placeholder={field.placeholder}

@@ -1,7 +1,7 @@
 import "./styling/Footer.css";
 const Footer: React.FC = () => {
     return (
-        <footer>
+        <footer className="footer">
             <p>
                 &copy; {new Date().getFullYear()} PadelZone. Alle rettigheter
                 reservert!
