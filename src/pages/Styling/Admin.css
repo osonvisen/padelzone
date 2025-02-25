@@ -1,41 +1,40 @@
-.admin-div {
-    max-width: 1200px;
-    min-height: 850px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.admin-show {
-    max-width: 1200px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.show-users {
-    margin-left: 15px;
-    background-color: aqua;
-}
-
-.show-bookings {
-    margin-right: 15px;
-    background-color: beige;
-}
-
+.admin-div,
+.admin-show,
 .admin-register {
     display: flex;
     max-width: 1200px;
     width: 100%;
     justify-content: space-around;
-    align-items: center;
 }
-.register-user {
-    min-height: 200px;
-    height: 100%;
+.register-users,
+.register-booking {
+    width: 25%;
+}
+.admin-div {
+    min-height: 800px;
     flex-direction: column;
     align-items: center;
-    justify-content: space-around;
+    background-image: url("../../assets/bgr-user.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.admin-show {
+    flex-direction: row;
+}
+.admin-register {
+    align-items: center;
+}
+.register-users {
+    flex-direction: column;
+    align-items: center;
+}
+.show-users {
+    margin-left: 15px;
+}
+
+.show-bookings {
+    margin-right: 15px;
+    background-color: beige;
+    margin-left: -30px;
 }

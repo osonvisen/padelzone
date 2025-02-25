@@ -7,9 +7,13 @@ body {
     flex-direction: column;
     flex-grow: 1; /* 🚀 Skyver footeren ned */
     justify-content: flex-start;
+    align-items: center;
+    width: 100%;
 }
 .layout-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* 🚀 Sørger for at hele skjermen brukes */
+    align-items: center;
+    width: 100%;
 }

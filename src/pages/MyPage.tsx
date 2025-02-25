@@ -4,7 +4,6 @@ import RegisterBooking from "../components/RegisterBooking";
 import { useNavigate } from "react-router-dom";
 import ShowBookings from "../components/ShowBookings";
 import "./Styling/Styling.css";
-import "./Styling/MyPage.css";
 
 const MyPage = () => {
     const currentUser = useSelector(
@@ -20,9 +19,13 @@ const MyPage = () => {
         <div className="main-container">
             <h2>Min side</h2>
             <div className="my-content">
-                <div className="register-booking">
-                    <RegisterBooking />
+                <div className="upper-cont">
+                    <div className="register-booking">
+                        <RegisterBooking />
+                    </div>
+                    <div className="right-side"></div>
                 </div>
+
                 <div className="show-bookings">
                     <ShowBookings />
                 </div>

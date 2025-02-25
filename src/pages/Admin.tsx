@@ -7,27 +7,30 @@ import RegisterUser from "../components/RegisterUser";
 
 const Admin = () => {
     return (
-        <div className="admin-div">
+        <>
             <h1>Administrator</h1>
-            <div className="admin-register">
-                <div className="register-booking">
-                    <RegisterBooking />
-                </div>
-                <div className="register-user">
-                    {/* <h1>Registrere bruker</h1> */}
-                    <RegisterUser />
-                </div>
-            </div>
+            <div className="admin-div">
+                <div className="admin-register">
+                    <div className="register-booking">
+                        <RegisterBooking />
+                    </div>
+                    <div className="show-bookings">
+                        {/* <h1>Registrere bruker</h1> */}
 
-            <div className="admin-show">
-                <div className="show-users">
-                    <ShowUsers />
+                        <ShowBookings />
+                    </div>
                 </div>
-                <div className="show-bookings">
-                    <ShowBookings />
+
+                <div className="admin-show">
+                    <div className="register-users">
+                        <RegisterUser />
+                    </div>
+                    <div className="show-users">
+                        <ShowUsers />
+                    </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

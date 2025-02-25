@@ -27,8 +27,11 @@ const Home: React.FC = () => {
     return (
         <div className="main-container">
             <h1>Velkommen til PadelZone</h1>
-            <div className="register-booking">
-                <RegisterBooking />
+            <div className="content-home">
+                <div className="left-home"></div>
+                <div className="register-booking">
+                    <RegisterBooking />
+                </div>
             </div>
 
             {currentUser ? (
@@ -36,8 +39,11 @@ const Home: React.FC = () => {
                     <h1>Du er logget inn som {currentUser.name}</h1>
                 </>
             ) : (
-                <>
-                    <button onClick={() => setIsLoginOpen(true)}>
+                <div className="lower">
+                    <button
+                        className="login-btn"
+                        onClick={() => setIsLoginOpen(true)}
+                    >
                         Logg inn
                     </button>
                     <ModalLogin
@@ -46,7 +52,7 @@ const Home: React.FC = () => {
                     >
                         <Login onClose={() => setIsLoginOpen(false)} />
                     </ModalLogin>
-                </>
+                </div>
             )}
         </div>
     );
