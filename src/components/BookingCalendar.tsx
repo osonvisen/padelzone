@@ -29,18 +29,26 @@ const BookingCalendar = () => {
     return (
         <div className="calendar-container">
             <h2>Velg dato</h2>
-            {courts.map((court) => (
-                <div className="court" key={court}>
-                    <h3>Bane {court}</h3>
-                    <ul>
-                        {availableTimeslots(court).map((time) => (
-                            <li key={time} className="available-slot">
-                                {time}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            <input
+                className="date-menu"
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+            />
+            <div className="courts-container">
+                {courts.map((court) => (
+                    <div className="court" key={court}>
+                        <h3>Bane {court}</h3>
+                        <ul>
+                            {availableTimeslots(court).map((time) => (
+                                <li key={time} className="available-slot">
+                                    {time}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };
