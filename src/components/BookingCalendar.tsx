@@ -26,7 +26,23 @@ const BookingCalendar = () => {
         return allTimeslots.filter((time) => !bookedTimes.includes(time));
     };
 
-    return <div>BookingCalendar</div>;
+    return (
+        <div className="calendar-container">
+            <h2>Velg dato</h2>
+            {courts.map((court) => (
+                <div className="court" key={court}>
+                    <h3>Bane {court}</h3>
+                    <ul>
+                        {availableTimeslots(court).map((time) => (
+                            <li key={time} className="available-slot">
+                                {time}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    );
 };
 
 export default BookingCalendar;
