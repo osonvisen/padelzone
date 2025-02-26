@@ -11,10 +11,10 @@ const Admin = () => {
             <h1>Administrator</h1>
             <div className="admin-div">
                 <div className="admin-register">
-                    <div className="register-booking">
+                    <div className="register-admin">
                         <RegisterBooking />
                     </div>
-                    <div className="show-bookings">
+                    <div className="admin-bookings">
                         {/* <h1>Registrere bruker</h1> */}
 
                         <ShowBookings />
@@ -22,10 +22,10 @@ const Admin = () => {
                 </div>
 
                 <div className="admin-show">
-                    <div className="register-users">
+                    <div className="admin-users">
                         <RegisterUser />
                     </div>
-                    <div className="show-users">
+                    <div className="show-admin">
                         <ShowUsers />
                     </div>
                 </div>

@@ -4,7 +4,6 @@
     justify-content: space-around;
     border: 2px solid black;
     border-radius: 10px;
-    padding: 20px;
     background-color: beige;
 }
 .register-booking,
@@ -72,15 +71,17 @@
 .register-booking {
     width: 30%;
 }
+.upper-cont,
+.show-bookings {
+    margin-left: 45px;
+}
 .upper-cont {
     display: flex;
     width: 100%;
-    margin-left: 25px;
 }
 .right-side {
     color: white;
 }
 .show-bookings {
     width: 50%;
-    margin-left: 25px;
 }

@@ -6,12 +6,18 @@
     width: 100%;
     justify-content: space-around;
 }
-.register-users,
-.register-booking {
+.admin-users,
+.register-admin {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: beige;
     width: 25%;
 }
 .admin-div {
-    min-height: 800px;
+    min-height: 700px;
     flex-direction: column;
     align-items: center;
     background-image: url("../../assets/bgr-user.png");
@@ -25,16 +31,19 @@
 .admin-register {
     align-items: center;
 }
-.register-users {
+.admin-users {
     flex-direction: column;
     align-items: center;
 }
-.show-users {
-    margin-left: 15px;
+.show-admin {
 }
 
-.show-bookings {
-    margin-right: 15px;
+.admin-bookings,
+.show-admin {
+    display: flex;
+    justify-content: space-around;
+    border: 2px solid black;
+    border-radius: 10px;
     background-color: beige;
-    margin-left: -30px;
+    padding: 15px;
 }
