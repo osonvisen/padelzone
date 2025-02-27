@@ -1,39 +1,46 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
+import { setBookingData } from "../redux/bookingSlice";
+import "./styling/BookingCalendar.css";
 
 const BookingCalendar = () => {
-    const [selectedDate, setSelectedDate] = useState<string>(
-        new Date().toISOString().split("T")[0]
+    const dispatch = useDispatch();
+    const currentUser = useSelector(
+        (state: RootState) => state.users.currentUser
     );
-    // Vi skal velge dato og få opp oversikten over ledige tidspunkter pr bane
-    // Vi trenger alle bookingene, banene og tidspunktene:
     const bookings = useSelector((state: RootState) => state.bookings.bookings);
+    const bookingData = useSelector(
+        (state: RootState) => state.bookings.bookingData
+    );
     const courts = [1, 2, 3, 4, 5, 6, 7, 8]; // 8 baner
     const allTimeslots = Array.from({ length: 14 }, (_, i) => `${8 + i}:00`); // 14 timeslots fra kl 8-21
 
     // Lager oversikt over opptatte timeslots
     const bookedTimeslots = bookings.filter(
-        (time) => time.date === selectedDate
+        (slot) => slot.date === bookingData?.date
     );
+
+    // Må ha en egen funksjon for å håndtere endring av dato
+    const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setBookingData({ ...bookingData, date: event.target.value }));
+    };
 
     // Funksjon for å sjekke ledige timeslots for hver bane
     const availableTimeslots = (courtId: number) => {
-        const bookedTimes = bookedTimeslots
-            .filter((time) => time.courtId)
-            .map((time) => time.timeslot);
+        const bookedSlots = bookedTimeslots
+            .filter((slot) => slot.courtId === courtId)
+            .map((slot) => slot.timeslot);
 
-        return allTimeslots.filter((time) => !bookedTimes.includes(time));
+        return allTimeslots.filter((slot) => !bookedSlots.includes(slot));
     };
 
     return (
         <div className="calendar-container">
-            <h2>Velg dato</h2>
             <input
                 className="date-menu"
                 type="date"
-                value={selectedDate}
-                onChange={(e) => setSelectedDate(e.target.value)}
+                value={bookingData?.date}
+                onChange={handleDateChange}
             />
             <div className="courts-container">
                 {courts.map((court) => (
@@ -41,7 +48,21 @@ const BookingCalendar = () => {
                         <h3>Bane {court}</h3>
                         <ul>
                             {availableTimeslots(court).map((time) => (
-                                <li key={time} className="available-slot">
+                                <li
+                                    key={time}
+                                    className="available-slot"
+                                    onClick={() =>
+                                        dispatch(
+                                            setBookingData({
+                                                ...bookingData,
+                                                date: bookingData?.date,
+                                                userId: currentUser?._id,
+                                                courtId: court,
+                                                timeslot: time,
+                                            })
+                                        )
+                                    }
+                                >
                                     {time}
                                 </li>
                             ))}

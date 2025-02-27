@@ -1,19 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const todayDate = new Date().toISOString().split("T")[0];
 interface Booking {
     _id?: string; // Tildeles av crudcrud
     userId: string;
-    courtId: number;
     date: string;
+    courtId: number;
+    players: string;
     timeslot: string;
 }
 
 interface BookingState {
     bookings: Booking[];
+    bookingData: Booking | null;
 }
 
 const initialState: BookingState = {
     bookings: JSON.parse(localStorage.getItem("bookings") || "[]"), // Henter bookinger fra localStorage hvis de eksisterer.
+    bookingData: { date: todayDate, courtId: "", players: "2", timeslot: "" },
 };
 
 const bookingSlice = createSlice({
@@ -43,9 +47,17 @@ const bookingSlice = createSlice({
             );
             localStorage.setItem("bookings", JSON.stringify(state.bookings));
         },
+        setBookingData: (state, action: PayloadAction<Booking | null>) => {
+            state.bookingData = action.payload;
+        },
     },
 });
 
-export const { setBookings, addBooking, editBooking, removeBooking } =
-    bookingSlice.actions;
+export const {
+    setBookings,
+    addBooking,
+    editBooking,
+    removeBooking,
+    setBookingData,
+} = bookingSlice.actions;
 export default bookingSlice.reducer;

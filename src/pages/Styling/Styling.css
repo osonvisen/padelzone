@@ -9,12 +9,11 @@
 .register-booking,
 .register-users {
     display: flex;
-    justify-content: space-around;
+    align-items: center;
     border: 2px solid black;
     border-radius: 10px;
-    padding: 0px 20px;
-    padding-bottom: 20px;
     background-color: beige;
+    padding: 20px;
 }
 .show-spacing {
     margin-bottom: 12px;
@@ -36,6 +35,7 @@
     background-image: url("../../assets/bgr-user.png");
     background-repeat: no-repeat;
     background-size: cover;
+    background-image: 1200px;
     border-radius: 5px;
 }
 .content-home {
@@ -44,14 +44,18 @@
     align-items: center;
     width: 100%;
     min-height: 500px;
-    background-color: blue;
-    background-image: url("../../assets/bgr-front.png");
-    background-size: cover;
-    background-repeat: no-repeat;
     border-radius: 5px;
 }
 .left-home {
-    width: 25%;
+    flex: 1;
+    max-width: 30%;
+    height: 680px;
+    overflow: hidden;
+    background-image: url("../../assets/player1.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 5px;
 }
 .lower {
     margin-top: 30px;
@@ -69,11 +73,12 @@
     background-color: aqua;
 }
 .register-booking {
-    width: 30%;
 }
 .upper-cont,
 .show-bookings {
     margin-left: 45px;
+    display: flex;
+    align-items: center;
 }
 .upper-cont {
     display: flex;

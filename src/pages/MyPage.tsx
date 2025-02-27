@@ -4,12 +4,18 @@ import RegisterBooking from "../components/RegisterBooking";
 import { useNavigate } from "react-router-dom";
 import ShowBookings from "../components/ShowBookings";
 import "./Styling/Styling.css";
+import BookingCalendar from "../components/BookingCalendar";
+// import { useState } from "react";
+// import { Booking } from "../types/Booking";
 
 const MyPage = () => {
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
     );
     const navigate = useNavigate();
+    // const [selectedBooking, setSelectedBooking] = useState<Booking | null>(
+    //     null
+    // );
 
     if (!currentUser) {
         navigate("/");
@@ -23,7 +29,9 @@ const MyPage = () => {
                     <div className="register-booking">
                         <RegisterBooking />
                     </div>
-                    <div className="right-side"></div>
+                    <div className="right-side">
+                        <BookingCalendar />
+                    </div>
                 </div>
 
                 <div className="show-bookings">

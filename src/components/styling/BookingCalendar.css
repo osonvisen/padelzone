@@ -1,12 +1,48 @@
 .calendar-container {
     text-align: center;
+    justify-content: center;
     padding: 10px;
 }
 .date-menu {
     padding: 5px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+.courts-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 5px;
+    padding: 5px;
 }
 .court {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: beige;
+    padding: 8px;
+    padding-bottom: 15px;
 }
-.available-slots {
+.court h3 {
+    color: black;
+}
+.court ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.available-slot {
+    display: flex;
+    justify-content: center;
+    padding: 3px;
+    margin-bottom: 5px;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+}
+.available-slot:hover {
+    background-color: rgb(104, 104, 103);
 }

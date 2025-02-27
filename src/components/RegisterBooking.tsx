@@ -1,33 +1,29 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import apiPOST from "../api/apiPOST";
-import { addBooking } from "../redux/bookingSlice";
+import { addBooking, setBookingData } from "../redux/bookingSlice";
 import "./styling/Register.css";
 
-const RegisterBooking: React.FC = () => {
+const RegisterBooking = () => {
     const dispatch = useDispatch();
     const bookings = useSelector((state: RootState) => state.bookings.bookings);
     const users = useSelector((state: RootState) => state.users.users);
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
     );
+    const bookingData = useSelector(
+        (state: RootState) => state.bookings.bookingData
+    );
 
-    // ---------------------------
-    // Inputfeltene til bookingen!
-    const [bookingData, setBookingData] = useState({
-        userId: currentUser?._id || "",
-        date: "",
-        courtId: "",
-        players: "2",
-        timeslot: "",
-    });
     // Holder rede på endriner i pre-bookingen
     const handleBookingChange = (name: string, value: string) => {
-        setBookingData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+        dispatch(
+            setBookingData((prev) => ({
+                ...prev,
+                [name]: value,
+            }))
+        );
     };
 
     // Sorterer bort opptatte baner
@@ -40,7 +36,7 @@ const RegisterBooking: React.FC = () => {
             (courtId) => {
                 const courtBookings = bookings.filter(
                     (booking) =>
-                        booking.courtId.toString() == courtId &&
+                        booking.courtId.toString() === courtId &&
                         booking.date === bookingData.date
                 );
                 return courtBookings.length < 14; // Fjerner banen hvis alle tidspunktene er opptatte
@@ -92,7 +88,6 @@ const RegisterBooking: React.FC = () => {
     return (
         <div>
             <h2>Registrer ny booking</h2>
-
             {/* Admin kan velge bruker */}
             {currentUser?.role === "admin" && (
                 <>

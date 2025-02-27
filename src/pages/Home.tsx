@@ -6,6 +6,7 @@ import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import "./Styling/Styling.css";
+import BookingCalendar from "../components/BookingCalendar";
 
 const Home: React.FC = () => {
     const currentUser = useSelector(
@@ -30,7 +31,7 @@ const Home: React.FC = () => {
             <div className="content-home">
                 <div className="left-home"></div>
                 <div className="register-booking">
-                    <RegisterBooking />
+                    <BookingCalendar />
                 </div>
             </div>
 
