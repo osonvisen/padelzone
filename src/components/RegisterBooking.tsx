@@ -43,24 +43,6 @@ const RegisterBooking = () => {
                   .map((_, i) => (8 + i).toString())
                   .filter((time) => !bookedTimeslots.includes(time));
 
-    // Sorterer bort opptatte tidspunkt for valgt dato og bane
-    // Ledige tidspunkt: ------------------------------------------
-    // const availableTimeslots = useMemo(() => {
-    //     if (!bookingData.courtId || !bookingData.date) return [];
-
-    //     const bookedTimeslots = bookings
-    //         .filter(
-    //             (booking) =>
-    //                 booking.courtId === bookingData.courtId &&
-    //                 booking.date === bookingData.date
-    //         )
-    //         .map((booking) => booking.timeslot);
-
-    //     return Array.from({ length: 14 }, (_, i) => 8 + i).filter(
-    //         (time) => !bookedTimeslots.includes(time.toString())
-    //     );
-    // }, [bookings, bookingData.courtId, bookingData.date]);
-
     const handleBooking = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!bookingData.courtId || !bookingData.date || !bookingData.timeslot)
@@ -108,8 +90,8 @@ const RegisterBooking = () => {
                         <option value="" disabled>
                             Velg bruker
                         </option>
-                        {users.map((user) => (
-                            <option key={user._id} value={user._id}>
+                        {users.map((user, index) => (
+                            <option key={user._id || index} value={user._id}>
                                 {user.name}
                             </option>
                         ))}
