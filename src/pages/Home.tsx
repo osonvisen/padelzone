@@ -16,13 +16,23 @@ const Home: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (currentUser) {
-            if (currentUser.role === "admin") {
+        if (!currentUser) return;
+
+        const timeout = setTimeout(() => {
+            if (
+                currentUser.role === "admin" &&
+                window.location.pathname !== "/admin"
+            ) {
                 navigate("/admin");
-            } else if (currentUser.role === "user") {
+            } else if (
+                currentUser.role === "user" &&
+                window.location.pathname !== "/mypage"
+            ) {
                 navigate("/mypage");
             }
-        }
+        }, 50); // 50ms forsinkelse
+
+        return () => clearTimeout(timeout); // Rydder opp timeout hvis komponenten unmountes
     }, [currentUser, navigate]);
 
     return (
