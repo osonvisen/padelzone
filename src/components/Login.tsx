@@ -30,25 +30,34 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
             name: "password",
             placeholder: "Ditt passord",
             type: "password",
-            label: "Password: ",
+            label: "Passord: ",
             value: formData.password,
         },
     ];
 
     const handleLogin = () => {
-        const existingUser = users.find((user) => user.name === formData.name); // Finner bruker basert på navn
+        const existingUser = users.find(
+            (user) =>
+                user.name === formData.name &&
+                user.password === formData.password
+        );
 
-        if (existingUser?.password === formData.password) {
+        if (existingUser) {
+            console.log("Logger inn bruker:", existingUser.name);
             dispatch(setCurrentUser(existingUser));
-            if (existingUser.role === "admin") {
-                navigate("/admin");
-            } else {
-                navigate("/mypage");
-            }
+
+            setTimeout(() => {
+                // Forsinkelse for å unngå race condition
+                if (existingUser.role === "admin") {
+                    navigate("/admin");
+                } else {
+                    navigate("/mypage");
+                }
+                onClose();
+            }, 100);
         } else {
             alert("Brukernavn eller passord er feil!");
         }
-        onClose(); // Lukker Modalen etter innloggingen er vellykket
     };
 
     const handleInput = (name: string, value: string) => {
@@ -57,6 +66,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
             [name]: value,
         }));
     };
+
     return (
         <div>
             <h2>Logg inn</h2>

@@ -8,12 +8,12 @@ import { setBookings } from "./redux/bookingSlice";
 const App = () => {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const storedUser = localStorage.getItem("currentUser");
-        if (storedUser) {
-            dispatch(setCurrentUser(JSON.parse(storedUser)));
-        }
-    }, [dispatch]);
+    // useEffect(() => {
+    //     const storedUser = localStorage.getItem("currentUser");
+    //     if (storedUser) {
+    //         dispatch(setCurrentUser(JSON.parse(storedUser)));
+    //     }
+    // }, [dispatch]);
 
     useEffect(() => {
         const loadData = async () => {

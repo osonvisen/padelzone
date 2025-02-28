@@ -4,9 +4,11 @@
 
 Jeg har brukt chatGPT til å hjelpe meg å formattere dette dokumentet, lage logoen og finne navnet til Padelzone, samt noe CSS. Ellers har chatGPT blitt brukt til å vise meg hvordan man bruker enkelte metoder osv. Jeg har ikke klippet ut og brukt, eller limt egen kode inn i chatGPT. Hovedkildene mine er W3School og react.dev. Jeg har også sett kurs på LinkedIn Learning.
 
+Oppdatering: Jeg har brukt chatGPT til å feilsøke prosjektet, da skjermen blir uresponsiv etter en logout og deretter en login til og fra den innebyggede admin-brukeren. Det har ikke lykkes å finne den feilen. Så den tar jeg gjerne en konstruktiv tilbakemeldig på! Se mer under Generelt.
+
 ## Generelt
 
-Av én eller annen grunn så låser brukeren til den innebygde admin seg. Jeg har funnet ut at i de tilfellene den gjør det, så kan man lukke fanen, og åpne på nytt via terminal. Jeg har gitt en annen bruker admin-status, og denne brukeren har aldri låst seg. Jeg mistenker at det oppstår en uendelig look, men jeg har ikke funnet ut av det enda..
+Av én eller annen grunn så låser skjemen seg i forbindelse med den innebygde admin. Jeg har funnet ut at i de tilfellene den gjør det etter at man har logget inn, så kan man lukke fanen, og åpne på nytt via terminal, og man er logget inn som admin, og alt fungerer. Jeg har gitt en annen bruker admin-status, og denne brukeren har aldri skjemen låst seg for. Jeg mistenker at det oppstår en uendelig loop, men jeg har ikke funnet ut av det enda..
 
 ## 🌍 **Base URL**
 

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { setBookingData } from "../redux/bookingSlice";
 import "./styling/BookingCalendar.css";
+import { useEffect } from "react";
 
 const BookingCalendar: React.FC = () => {
     const dispatch = useDispatch();
@@ -28,6 +29,10 @@ const BookingCalendar: React.FC = () => {
             (b) => b.courtId === courtId && b.timeslot === slot
         );
 
+    useEffect(() => {
+        setBookingData(bookings);
+    }, [bookings]);
+
     return (
         <div className="calendar-container">
             <input
@@ -48,51 +53,31 @@ const BookingCalendar: React.FC = () => {
                     <div className="court" key={court}>
                         <h3>Bane {court}</h3>
                         <ul>
-                            {allTimeslots.map(
-                                (slot) => {
-                                    const booked = isSlotBooked(court, slot);
-                                    return (
-                                        <li
-                                            key={slot}
-                                            className={`available-slot ${
-                                                booked ? "booked" : "available"
-                                            }`}
-                                            onClick={() => {
-                                                if (!booked) {
-                                                    dispatch(
-                                                        setBookingData({
-                                                            ...bookingData,
-                                                            userId: currentUser?._id,
-                                                            courtId: court,
-                                                            timeslot: slot,
-                                                        })
-                                                    );
-                                                }
-                                            }}
-                                        >
-                                            {slot}:00
-                                        </li>
-                                    );
-                                }
-                                // (
-                                //     <li
-                                //         key={time}
-                                //         className="available-slot"
-                                //         onClick={() =>
-                                //             dispatch(
-                                //                 setBookingData({
-                                //                     ...bookingData,
-                                //                     userId: currentUser?._id,
-                                //                     courtId: court,
-                                //                     timeslot: time,
-                                //                 })
-                                //             )
-                                //         }
-                                //     >
-                                //         {time}
-                                //     </li>
-                                //     )
-                            )}
+                            {allTimeslots.map((slot) => {
+                                const booked = isSlotBooked(court, slot);
+                                return (
+                                    <li
+                                        key={slot}
+                                        className={`available-slot ${
+                                            booked ? "booked" : "available"
+                                        }`}
+                                        onClick={() => {
+                                            if (!booked) {
+                                                dispatch(
+                                                    setBookingData({
+                                                        ...bookingData,
+                                                        userId: currentUser?._id,
+                                                        courtId: court,
+                                                        timeslot: slot,
+                                                    })
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        {slot}:00
+                                    </li>
+                                );
+                            })}
                         </ul>
                     </div>
                 ))}

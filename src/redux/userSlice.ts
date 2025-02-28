@@ -21,16 +21,24 @@ const adminUser: User = {
     role: "admin",
 };
 
-const initialState: UserState = {
-    users: JSON.parse(localStorage.getItem("users") || "[]"), // Henter brukere fra localStorage
-    currentUser: JSON.parse(localStorage.getItem("currentUser") || "null"),
-};
+// Henter brukere fra localStorage
+const storedUsers = JSON.parse(localStorage.getItem("users") || "[]");
+const storedCurrentUser = JSON.parse(
+    localStorage.getItem("currentUser") || "null"
+);
 
-if (!initialState.users.some((user) => user.name === adminUser.name)) {
-    console.log("Legger til admin..");
-    initialState.users.push(adminUser);
-    localStorage.setItem("users", JSON.stringify(initialState.users));
+// Sørger for at admin kun legges til én gang
+if (!storedUsers.some((user: User) => user.name === adminUser.name)) {
+    console.log("Legger til admin-bruker i localStorage...");
+    storedUsers.push(adminUser);
+    localStorage.setItem("users", JSON.stringify(storedUsers));
 }
+
+// Initial state med oppdatert users + admin
+const initialState: UserState = {
+    users: storedUsers,
+    currentUser: storedCurrentUser !== "null" ? storedCurrentUser : null,
+};
 
 const userSlice = createSlice({
     name: "user",
@@ -38,29 +46,38 @@ const userSlice = createSlice({
     reducers: {
         setUsers: (state, action: PayloadAction<User[]>) => {
             state.users = action.payload;
-            localStorage.setItem("users", JSON.stringify(state.users)); // Lagre i localStorage
+            localStorage.setItem("users", JSON.stringify(state.users));
         },
         addUser: (state, action: PayloadAction<User>) => {
             state.users.push(action.payload);
-            localStorage.setItem("users", JSON.stringify(state.users)); // Oppdater localStorage
+            localStorage.setItem("users", JSON.stringify(state.users));
         },
         removeUser: (state, action: PayloadAction<string>) => {
             state.users = state.users.filter(
                 (user) => user._id !== action.payload
             );
+            localStorage.setItem("users", JSON.stringify(state.users));
         },
         editUser: (state, action: PayloadAction<User | null>) => {
+            if (!action.payload) return;
             const index = state.users.findIndex(
-                (user) => user._id === action.payload?._id
+                (user) => user._id === action.payload._id
             );
             if (index !== -1) {
                 state.users[index] = action.payload;
+                localStorage.setItem("users", JSON.stringify(state.users));
             }
-            localStorage.setItem("users", JSON.stringify(state.users));
         },
         setCurrentUser: (state, action: PayloadAction<User | null>) => {
             state.currentUser = action.payload;
-            localStorage.setItem("currentUser", JSON.stringify(action.payload));
+            if (action.payload) {
+                localStorage.setItem(
+                    "currentUser",
+                    JSON.stringify(action.payload)
+                );
+            } else {
+                localStorage.removeItem("currentUser");
+            }
         },
         removeCurrentUser: (state) => {
             state.currentUser = null;

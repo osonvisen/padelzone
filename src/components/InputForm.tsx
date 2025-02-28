@@ -27,10 +27,11 @@ const InputForm: React.FC<InputFormProps> = ({
                 onSubmit(); // Kall submit-funksjonen
             }}
         >
-            {fields.map((field) => (
+            {fields.map((field, index) => (
                 <div key={field.name}>
                     <label>{field.label}</label>
                     <input
+                        id={index}
                         className="show-spacing"
                         type={field.type}
                         name={field.name}
