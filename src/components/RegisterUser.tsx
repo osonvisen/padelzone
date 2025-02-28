@@ -64,6 +64,11 @@ const RegisterUser: React.FC = () => {
         try {
             const newUser = await apiPOST("/users", createUser); // Får tilbake bruker med _id.
             dispatch(addUser(newUser)); // Oppdaterer redux users
+            setFormData({
+                name: "",
+                email: "",
+                password: "",
+            });
             if (currentUser?.role !== "admin") {
                 dispatch(setCurrentUser(newUser));
                 localStorage.setItem("currentUser", JSON.stringify(newUser)); // lagrer i localStorage

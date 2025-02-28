@@ -34,7 +34,6 @@ const App = () => {
                 if (usersFromLocal.length === usersFromAPI.length + 1) {
                     dispatch(setUsers(usersFromLocal));
                 } else {
-                    console.log("Bruker data fra api: ");
                     const updatedUsers = adminUser
                         ? [...usersFromAPI, adminUser]
                         : usersFromAPI;
