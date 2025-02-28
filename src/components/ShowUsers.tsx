@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useState } from "react";
 import ModalEdit from "./ModalEdit";
+import { removeUser, User } from "../redux/userSlice";
 
 const ShowUsers = () => {
     const users = useSelector((state: RootState) => state.users.users);
@@ -33,14 +34,14 @@ const ShowUsers = () => {
                 />
             </div>
             <ul>
-                {filteredUsers.map((user) => (
+                {filteredUsers.map((user: User) => (
                     <div key={user._id} className="show-spacing">
                         Navn: {user.name} | E-post: {user.email} | Rolle:{" "}
-                        {user.role}
+                        {user.role} | Passord: {user.password}
                         <button onClick={() => setEditingUser(user)}>
                             Rediger
                         </button>
-                        <button>Slett</button>
+                        <button onClick={removeUser(user._id)}>Slett</button>
                     </div>
                 ))}
             </ul>

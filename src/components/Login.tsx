@@ -13,25 +13,31 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
     const users = useSelector((state: RootState) => state.users.users);
     const dispatch = useDispatch();
     const [formData, setFormData] = useState({
-        email: "",
+        name: "",
+        password: "",
     });
     const navigate = useNavigate();
 
     const fields = [
         {
-            name: "email",
-            placeholder: "Din epostadresse",
-            type: "email",
-            label: "E-post: ",
-            value: formData.email,
+            name: "name",
+            placeholder: "Ditt brukernavn",
+            type: "text",
+            label: "Brukernavn: ",
+            value: formData.name,
+        },
+        {
+            name: "password",
+            placeholder: "Ditt passord",
+            type: "password",
+            label: "Password: ",
+            value: formData.password,
         },
     ];
 
     const handleLogin = () => {
-        const existingUser = users.find(
-            (user) => user.email === formData.email
-        ); // Finner bruker basert på e-post
-        if (existingUser) {
+        const existingUser = users.find((user) => user.name === formData.name); // Finner bruker basert på navn
+        if (existingUser?.password === formData.password) {
             dispatch(setCurrentUser(existingUser));
             if (existingUser.role === "admin") {
                 navigate("/admin");
@@ -39,7 +45,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
                 navigate("/mypage");
             }
         } else {
-            alert("Fant ingen bruker!");
+            alert("Brukernavn eller passord er feil!");
         }
         onClose(); // Lukker Modalen etter innloggingen er vellykket
     };

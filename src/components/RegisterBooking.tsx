@@ -16,51 +16,69 @@ const RegisterBooking = () => {
         (state: RootState) => state.bookings.bookingData
     );
 
-    // Holder rede på endriner i pre-bookingen
-    const handleBookingChange = (name: string, value: string) => {
-        dispatch(
-            setBookingData((prev) => ({
-                ...prev,
-                [name]: value,
-            }))
-        );
-    };
-
     // Sorterer bort opptatte baner
     // Ledige baner: --------------------------------------------
-    const availableCourts = useMemo(() => {
-        if (!bookingData.date)
-            return Array.from({ length: 8 }, (_, i) => (i + 1).toString());
+    // const availableCourts = useMemo(() => {
+    //     if (!bookingData.date)
+    //         return Array.from({ length: 8 }, (_, i) => (i + 1).toString());
 
-        return Array.from({ length: 8 }, (_, i) => (i + 1).toString()).filter(
-            (courtId) => {
-                const courtBookings = bookings.filter(
-                    (booking) =>
-                        booking.courtId.toString() === courtId &&
-                        booking.date === bookingData.date
-                );
-                return courtBookings.length < 14; // Fjerner banen hvis alle tidspunktene er opptatte
-            }
-        );
-    }, [bookings, bookingData.date]);
+    //     return Array.from({ length: 8 }, (_, i) => (i + 1).toString()).filter(
+    //         (courtId) => {
+    //             const courtBookings = bookings.filter(
+    //                 (booking) =>
+    //                     booking.courtId.toString() === courtId &&
+    //                     booking.date === bookingData.date
+    //             );
+    //             return courtBookings.length < 14; // Fjerner banen hvis alle tidspunktene er opptatte
+    //         }
+    //     );
+    // }, [bookings, bookingData.date]);
+
+    const availableCourts = !bookingData.date
+        ? [...Array(8)].map((_, i) => (i + 1).toString())
+        : [...Array(8)]
+              .map((_, i) => (i + 1).toString())
+              .filter(
+                  (courtId) =>
+                      bookings.filter(
+                          (booking) =>
+                              booking.courtId === courtId &&
+                              booking.date === bookingData.date
+                      ).length < 14
+              );
+
+    const bookedTimeslots = bookings
+        .filter(
+            (booking) =>
+                booking.courtId === bookingData.courtId &&
+                booking.date === bookingData.date
+        )
+        .map((booking) => booking.timeslot);
+
+    const availableTimeslots =
+        !bookingData.courtId || !bookingData.date
+            ? []
+            : [...Array(14)]
+                  .map((_, i) => (8 + i).toString())
+                  .filter((time) => !bookedTimeslots.includes(time));
 
     // Sorterer bort opptatte tidspunkt for valgt dato og bane
     // Ledige tidspunkt: ------------------------------------------
-    const availableTimeslots = useMemo(() => {
-        if (!bookingData.courtId || !bookingData.date) return [];
+    // const availableTimeslots = useMemo(() => {
+    //     if (!bookingData.courtId || !bookingData.date) return [];
 
-        const bookedTimeslots = bookings
-            .filter(
-                (booking) =>
-                    booking.courtId.toString() === bookingData.courtId &&
-                    booking.date === bookingData.date
-            )
-            .map((booking) => booking.timeslot);
+    //     const bookedTimeslots = bookings
+    //         .filter(
+    //             (booking) =>
+    //                 booking.courtId === bookingData.courtId &&
+    //                 booking.date === bookingData.date
+    //         )
+    //         .map((booking) => booking.timeslot);
 
-        return Array.from({ length: 14 }, (_, i) => 8 + i).filter(
-            (time) => !bookedTimeslots.includes(time.toString())
-        );
-    }, [bookings, bookingData.courtId, bookingData.date]);
+    //     return Array.from({ length: 14 }, (_, i) => 8 + i).filter(
+    //         (time) => !bookedTimeslots.includes(time.toString())
+    //     );
+    // }, [bookings, bookingData.courtId, bookingData.date]);
 
     const handleBooking = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -73,13 +91,15 @@ const RegisterBooking = () => {
         try {
             const createdBooking = await apiPOST("/bookings", newBooking);
             dispatch(addBooking(createdBooking)); // Sender til api først, og får returnert _id før vi legger til i redux og localStorage
-            setBookingData({
-                userId: currentUser?._id || "",
-                date: bookingData.date,
-                players: bookingData.players,
-                courtId: bookingData.courtId,
-                timeslot: "",
-            });
+            dispatch(
+                setBookingData({
+                    userId: currentUser?._id,
+                    date: bookingData?.date,
+                    players: bookingData?.players,
+                    courtId: bookingData?.courtId,
+                    timeslot: "",
+                })
+            );
         } catch (error) {
             console.error("Feil ved booking: ", error);
         }
@@ -95,7 +115,12 @@ const RegisterBooking = () => {
                     <select
                         value={bookingData.userId}
                         onChange={(e) =>
-                            handleBookingChange("userId", e.target.value)
+                            dispatch(
+                                setBookingData({
+                                    ...bookingData,
+                                    userId: e.target.value,
+                                })
+                            )
                         }
                         className="show-spacing"
                     >
@@ -116,7 +141,9 @@ const RegisterBooking = () => {
             <input
                 type="date"
                 value={bookingData.date}
-                onChange={(e) => handleBookingChange("date", e.target.value)}
+                onChange={(e) =>
+                    dispatch(setBookingData({ date: e.target.value }))
+                }
                 className="show-spacing"
             />
             <br />
@@ -126,7 +153,9 @@ const RegisterBooking = () => {
             <label>Velg antall spillere:</label>
             <select
                 value={bookingData.players}
-                onChange={(e) => handleBookingChange("players", e.target.value)}
+                onChange={(e) =>
+                    dispatch(setBookingData({ players: e.target.value }))
+                }
                 className="show-spacing"
             >
                 {[2, 4].map((num) => (
@@ -144,7 +173,14 @@ const RegisterBooking = () => {
             </label>
             <select
                 value={bookingData.courtId}
-                onChange={(e) => handleBookingChange("courtId", e.target.value)}
+                onChange={(e) =>
+                    dispatch(
+                        setBookingData({
+                            ...bookingData,
+                            courtId: e.target.value.toString(),
+                        })
+                    )
+                }
                 className="show-spacing"
                 id="courtSelect"
             >
@@ -165,7 +201,12 @@ const RegisterBooking = () => {
             <select
                 value={bookingData.timeslot}
                 onChange={(e) =>
-                    handleBookingChange("timeslot", e.target.value)
+                    dispatch(
+                        setBookingData({
+                            ...bookingData,
+                            timeslot: e.target.value.toString(),
+                        })
+                    )
                 }
                 className="show-spacing"
             >

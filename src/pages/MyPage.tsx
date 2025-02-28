@@ -8,7 +8,7 @@ import BookingCalendar from "../components/BookingCalendar";
 // import { useState } from "react";
 // import { Booking } from "../types/Booking";
 
-const MyPage = () => {
+const MyPage: React.FC = () => {
     const currentUser = useSelector(
         (state: RootState) => state.users.currentUser
     );

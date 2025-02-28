@@ -32,10 +32,10 @@
     padding: 10px 0;
     width: 100%;
     min-height: 800px;
-    background-image: url("../../assets/bgr-user.png");
+    /* background-image: url("../../assets/bgr-user.png");
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: 1200px;
+    background-image: 1200px; */
     border-radius: 5px;
 }
 .content-home {

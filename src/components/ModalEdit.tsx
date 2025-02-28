@@ -15,6 +15,7 @@ interface EditProps {
         timeslot?: string;
         name?: string;
         email?: string;
+        password?: string;
         role?: "user" | "admin";
     };
     type: "bookings" | "users";
@@ -131,6 +132,16 @@ const ModalEdit: React.FC<EditProps> = ({ item, type, onClose }) => {
                             value={updatedObject.email}
                             onChange={(e) =>
                                 handleChange("email", e.target.value)
+                            }
+                        />
+
+                        <label>Passord: </label>
+                        <input
+                            className="show-spacing"
+                            type="text" // For synlig passord
+                            value={updatedObject.password}
+                            onChange={(e) =>
+                                handleChange("password", e.target.value)
                             }
                         />
 

@@ -31,9 +31,9 @@ const App: React.FC = () => {
                 // Henter fra API
                 const usersFromAPI = await apiGET("/users");
                 // Henter frem admin-brukeren som vi får bruk for
-                const adminUser = storedUsers.find(
-                    (user) => user.role === "admin"
-                );
+                // const adminUser = storedUsers.find(
+                //     (user) => user.role === "admin"
+                // );
 
                 // Sjekker at vi har riktig antall begge steder, ellers bruker vi data fra api
                 // +1 admin i LS!
@@ -43,6 +43,7 @@ const App: React.FC = () => {
                     const updatedUsers = adminUser
                         ? [...usersFromAPI, adminUser]
                         : usersFromAPI;
+                    dispatch(setUsers(updatedUsers));
                     localStorage.setItem("users", JSON.stringify(updatedUsers)); // Update LS
                 }
                 // ---------------------

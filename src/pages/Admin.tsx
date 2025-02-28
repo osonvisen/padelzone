@@ -15,8 +15,6 @@ const Admin = () => {
                         <RegisterBooking />
                     </div>
                     <div className="admin-bookings">
-                        {/* <h1>Registrere bruker</h1> */}
-
                         <ShowBookings />
                     </div>
                 </div>

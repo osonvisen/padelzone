@@ -4,6 +4,7 @@ export interface User {
     _id?: string;
     name: string;
     email: string;
+    password: string;
     role: "user" | "admin";
 }
 
@@ -16,6 +17,7 @@ const adminUser: User = {
     _id: "administrator",
     name: "admin",
     email: "admin@padelzone.no",
+    password: "admin",
     role: "admin",
 };
 
@@ -24,7 +26,8 @@ const initialState: UserState = {
     currentUser: JSON.parse(localStorage.getItem("currentUser") || "null"),
 };
 
-if (!initialState.users.some((user) => user.email === adminUser.email)) {
+if (!initialState.users.some((user) => user.name === adminUser.name)) {
+    console.log("Legger til admin..");
     initialState.users.push(adminUser);
     localStorage.setItem("users", JSON.stringify(initialState.users));
 }
@@ -60,7 +63,7 @@ const userSlice = createSlice({
             localStorage.setItem("currentUser", JSON.stringify(action.payload));
         },
         removeCurrentUser: (state, action: PayloadAction<User | null>) => {
-            state.currentUser = action.payload;
+            state.currentUser = null;
             localStorage.removeItem("currentUser");
         },
     },

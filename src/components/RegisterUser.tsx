@@ -10,6 +10,7 @@ const RegisterUser: React.FC = () => {
     const [formData, setFormData] = useState({
         userName: "",
         email: "",
+        password: "",
     });
     const users = useSelector((state: RootState) => state.users.users);
     const currentUser = useSelector(
@@ -33,10 +34,15 @@ const RegisterUser: React.FC = () => {
             type: "email",
             label: "E-post: ",
         },
+        {
+            name: "password",
+            placeholder: "Ønsket passord",
+            type: "password",
+            label: "Passord: ",
+        },
     ];
 
     const handleRegister = async () => {
-        console.log(users);
         if (!formData.userName || !formData.email)
             return alert("Fyll ut alle feltene!");
 
@@ -51,13 +57,13 @@ const RegisterUser: React.FC = () => {
         const createUser = {
             name: formData.userName,
             email: formData.email,
+            password: formData.password,
             role: "user",
         };
 
         try {
             const newUser = await apiPOST("/users", createUser); // Får tilbake bruker med _id.
             dispatch(addUser(newUser)); // Oppdaterer redux users
-
             if (currentUser?.role !== "admin") {
                 dispatch(setCurrentUser(newUser));
                 localStorage.setItem("currentUser", JSON.stringify(newUser)); // lagrer i localStorage

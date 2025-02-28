@@ -17,7 +17,7 @@ interface BookingState {
 
 const initialState: BookingState = {
     bookings: JSON.parse(localStorage.getItem("bookings") || "[]"), // Henter bookinger fra localStorage hvis de eksisterer.
-    bookingData: { date: todayDate, courtId: "", players: "2", timeslot: "" },
+    bookingData: { date: todayDate, players: "2", timeslot: "" },
 };
 
 const bookingSlice = createSlice({
