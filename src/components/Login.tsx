@@ -37,6 +37,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 
     const handleLogin = () => {
         const existingUser = users.find((user) => user.name === formData.name); // Finner bruker basert på navn
+
         if (existingUser?.password === formData.password) {
             dispatch(setCurrentUser(existingUser));
             if (existingUser.role === "admin") {

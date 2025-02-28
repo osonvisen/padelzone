@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import { useState } from "react";
 import ModalEdit from "./ModalEdit";
@@ -11,6 +11,7 @@ const ShowUsers = () => {
     );
     const [editingUser, setEditingUser] = useState(null);
     const [serchUser, setSearchUser] = useState("");
+    const dispatch = useDispatch();
 
     if (!currentUser || currentUser.role !== "admin") return null;
 
@@ -41,7 +42,9 @@ const ShowUsers = () => {
                         <button onClick={() => setEditingUser(user)}>
                             Rediger
                         </button>
-                        <button onClick={removeUser(user._id)}>Slett</button>
+                        <button onClick={() => dispatch(removeUser(user._id))}>
+                            Slett
+                        </button>
                     </div>
                 ))}
             </ul>

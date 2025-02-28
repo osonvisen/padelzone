@@ -1,5 +1,3 @@
-// Skal vise brukerens, eller alle brukeres, bookinger
-
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import apiDELETE from "../api/apiDELETE";

@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/store";
 import apiPOST from "../api/apiPOST";
@@ -15,24 +14,6 @@ const RegisterBooking = () => {
     const bookingData = useSelector(
         (state: RootState) => state.bookings.bookingData
     );
-
-    // Sorterer bort opptatte baner
-    // Ledige baner: --------------------------------------------
-    // const availableCourts = useMemo(() => {
-    //     if (!bookingData.date)
-    //         return Array.from({ length: 8 }, (_, i) => (i + 1).toString());
-
-    //     return Array.from({ length: 8 }, (_, i) => (i + 1).toString()).filter(
-    //         (courtId) => {
-    //             const courtBookings = bookings.filter(
-    //                 (booking) =>
-    //                     booking.courtId.toString() === courtId &&
-    //                     booking.date === bookingData.date
-    //             );
-    //             return courtBookings.length < 14; // Fjerner banen hvis alle tidspunktene er opptatte
-    //         }
-    //     );
-    // }, [bookings, bookingData.date]);
 
     const availableCourts = !bookingData.date
         ? [...Array(8)].map((_, i) => (i + 1).toString())

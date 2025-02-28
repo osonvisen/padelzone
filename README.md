@@ -6,7 +6,7 @@ Jeg har brukt chatGPT til å hjelpe meg å formattere dette dokumentet, lage log
 
 ## Generelt
 
-Jeg har valgt å ikke bruke passord til å logge inn. Dette fordi det rett og slett er mer effektivt når man tester, og bytter mellom users/admin for å se hvordan en funksjon fungerer mens man lager den. Det er i midlertid relativt enkelt å implementere dette senere, ved å legge til et inputfelt for passord ved registrering og ved innlogging, også lagre dette i databasen.
+Av én eller annen grunn så låser brukeren til den innebygde admin seg. Jeg har funnet ut at i de tilfellene den gjør det, så kan man lukke fanen, og åpne på nytt via terminal. Jeg har gitt en annen bruker admin-status, og denne brukeren har aldri låst seg. Jeg mistenker at det oppstår en uendelig look, men jeg har ikke funnet ut av det enda..
 
 ## 🌍 **Base URL**
 

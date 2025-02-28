@@ -1,9 +1,9 @@
 import RegisterBooking from "../components/RegisterBooking";
 import ShowBookings from "../components/ShowBookings";
 import ShowUsers from "../components/ShowUsers";
+import RegisterUser from "../components/RegisterUser";
 import "./Styling/Styling.css";
 import "./Styling/Admin.css";
-import RegisterUser from "../components/RegisterUser";
 
 const Admin = () => {
     return (

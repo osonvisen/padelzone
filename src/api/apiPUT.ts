@@ -3,7 +3,6 @@ import { API_BASE_URL } from "./apiConfig";
 // Vi skal ta i mot objektet og _id til den som skal redigeres/endres
 const apiPUT = async (updatedObject: object, type: "user" | "bookings") => {
     const apiUrl = `${API_BASE_URL}/${type}/${updatedObject._id}`;
-    console.log(updatedObject);
     const { _id, ...cleanObject } = updatedObject;
     try {
         const response = await fetch(apiUrl, {

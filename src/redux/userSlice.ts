@@ -14,7 +14,7 @@ interface UserState {
 }
 
 const adminUser: User = {
-    _id: "administrator",
+    _id: "administrator1",
     name: "admin",
     email: "admin@padelzone.no",
     password: "admin",
@@ -62,7 +62,7 @@ const userSlice = createSlice({
             state.currentUser = action.payload;
             localStorage.setItem("currentUser", JSON.stringify(action.payload));
         },
-        removeCurrentUser: (state, action: PayloadAction<User | null>) => {
+        removeCurrentUser: (state) => {
             state.currentUser = null;
             localStorage.removeItem("currentUser");
         },
