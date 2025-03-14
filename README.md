@@ -1,3 +1,8 @@
+Edit: 
+Eksamen i Javascript Rammeverk - React
+
+Karakter: A
+
 # 📌 **API-Dokumentasjon – PadelZone Booking System**
 
 ## chatGPT
